@@ -1,0 +1,10 @@
+[submodule "skins/liberty"]
+	path = skins/liberty
+	url = https://github.com/JeonDohyeon/theseed-skin-liberty
+	branch = use
+[submodule "skins/buma"]
+	path = skins/buma
+	url = https://github.com/JeonDohyeon/theseed-skin-buma
+[submodule "skins/vector-theseed"]
+	path = skins/vector-theseed
+	url = https://github.com/JeonDohyeon/theseed-skin-vector
