@@ -1,0 +1,31 @@
+name: 버그 제보
+description: 사이트나 엔진에서 발생한 오류를 제보해주세요
+title: "[오류] "
+labels: ["bug", "help wanted"]
+assignees:
+  - JeonDohyeon
+body:
+  - type: markdown
+    attributes:
+      value: |
+        오류를 제보해주셔서 감사합니다!
+  - type: textarea
+    id: details
+    attributes:
+      label: 무순 문제가 생겼나요?
+      description: 또한, 원래 뭐가 발생해야 하는지도 적어 주시기 바랍니다.
+      placeholder: 여기에 적어주세요.
+      value: ""
+    validations:
+      required: true
+  - type: dropdown
+    id: branch
+    attributes:
+      label: 브랜치 선택
+      description: 어느 브랜치에서 문제가 발생했나요?
+      options:
+        - flight (테스트위키 등)
+        - patch/... (pull request용 브랜치)
+        - upstream/master (gdl-blue님의 master 브랜치)
+    validations:
+      required: true
