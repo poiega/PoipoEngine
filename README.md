@@ -1,6 +1,6 @@
 더시드 엔진 (구 프론트엔드 기준) 모방 프로젝트.  
 < "엔진 내부 UI는 상관없음." ( https://feedback.theseed.io/posts/280 ) >  
-테스트 서버 - https://go2021.glitch.me
+테스트 서버 - https://go2021.glitch.me (지금 접속 안 된다.)
 
 나무픽스와 거의 호환된다.
 
@@ -28,7 +28,9 @@ Pull Request 시 서버 코드에는 Node.js 13 이상, 프론트엔드 자바�
   - ps1 파일로 스크립트화했다. 반드시 css 폴더 만들고 실행할 것. 지가 알아서 다 다운받아준다.
 - 스킨
   - 사실, skins 디렉토리 안에 원하는 스킨 이름 디렉토리를 만들어서 거기다 포크를 때려도 된다.
-  - 누가 말리진 않는다. 다만 깃으로 관리한다면 그 파일까지 다 올라온다. [여기](./skins/liberty) 참조.
+    - 누가 말리진 않는다. 다만 깃으로 관리한다면 그 파일까지 다 올라온다. [여기](./skins/liberty) 참조.
+  - 아니면, skins 아래에 `git submodule add <url> [relative-dir]` 써도 된다.
+    - 지금은 저걸로 적용해놨다. 구현체에 따라서 파일이 다 올라오는 경우도 있고 자동으로 submodule화되는 경우가 있어서 submodule로 통합.
 - `npm i`
   - 사실 얜 `npm install`이다. 근데 짧게 쓰려고 5자로 줄인 거.
     - 개발자 미국놈 아니랄까봐 install 대신 i 쓴다.
@@ -56,7 +58,10 @@ Pull Request 시 서버 코드에는 Node.js 13 이상, 프론트엔드 자바�
   - `no_username_format`: (기본값 false) 한글, 공백 등의 특수문자를 사용자 이름으로 쓸 수 있게 하고 길이 제한을 없앤다.
   - `owners`: (기본값 \[\]) /admin/config에 접속할 수 있는 사용자 이름 배열
   - `reserved_usernames`: (기본값 \["namubot"\]) 이 배열 안에 있는 닉네임으로 계정을 만들 수 없다.
-  - `theseed_version`: (기본값 "4.12.0") [the seed 판올림 기록](https://namu.wiki/w/the%20seed/%EC%97%85%EB%8D%B0%EC%9D%B4%ED%8A%B8#toc)을 참고하여, 모방할 the seed 엔진의 버전을 지정한다(형식 주의! 4.4(X), "4.4"(X), 4.4.1(X), "4.4.1"(O) 문자열 x.y.z 형식으로). 예를 들어, "4.4.2"로 할 경우, v4.4.3에 추가된 쓰레드 주제/문서 변경 기능을 사용할 수 없고, "4.18.0"으로 할 경우 IPACL과 사용자 차단 기능이 비활성화되고 ACLGroup가 활성화되며 ACL에서 이름공간ACL 실행 action를 사용할 수 있다.
+  - `theseed_version`: (기본값 "4.12.0") [the seed 판올림 기록](https://namu.wiki/w/the%20seed/%EC%97%85%EB%8D%B0%EC%9D%B4%ED%8A%B8#toc)을 참고하여, 모방할 the seed 엔진의 버전을 지정한다.
+    - 형식 주의! 4.4(X), "4.4"(X), 4.4.1(X), "4.4.1"(O) 문자열 x.y.z 형식으로.
+    - 예를 들어, "4.4.2"로 할 경우, v4.4.3에 추가된 쓰레드 주제/문서 변경 기능을 사용할 수 없고,  
+    "4.18.0"으로 할 경우 IPACL과 사용자 차단 기능이 비활성화되고 ACLGroup가 활성화되며 ACL에서 이름공간ACL 실행 action를 사용할 수 있다.
   - `replicate_theseed_license`: (기본값 false) 라이선스 페이지를 더시드 엔진처럼 띄운다. 가급적이면 쓰지 않는 것을 권장한다.
   - `namuwiki_exclusive`: (기본값 false) 나무위키 전용 기능(경고 ACL 그룹, 문서 이전 판 경고 등)을 활성화한다.
   - `enable_captcha`: (기본값 false) 보안문자를 쓰게 한다.
@@ -65,9 +70,6 @@ Pull Request 시 서버 코드에는 Node.js 13 이상, 프론트엔드 자바�
 
 ### 잡소리
 - 검색 서버 설정은 안 건드리는 게 정신건강에 이롭다.
-- Liberty 스킨은 [여기](https://github.com/JeonDohyeon/theseed-skin-liberty)에 포크가 있다.  
-지금 issue로 확인 중인 거긴 한데, 제대로 작동하는 게 확인되면 뭔가 이름이 겁나 긴 브랜치에서 master로 넘길 거다.  
-`"theseed_version": "4.18.0"` 및 그 이상의 더시드 설정에서는 확인 완료. 4.17.x 이하 버전에서 어떻게 표시되는지는 확인 탁부.
 
 ## 라이선스
 자유롭게 쓰기 바란다. (렌더러는 개조 시 소스 코드 공개해주었으면 좋겠음. 그리고 포크판을 특허출원 하지 마라.)
