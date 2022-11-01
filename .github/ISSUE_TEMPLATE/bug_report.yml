@@ -15,7 +15,7 @@ body:
       label: 무순 문제가 생겼나요?
       description: 또한, 원래 뭐가 발생해야 하는지도 적어 주시기 바랍니다.
       placeholder: 여기에 적어주세요.
-      value: ""
+      value: "asdf"
     validations:
       required: true
   - type: dropdown
