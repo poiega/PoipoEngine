@@ -21,6 +21,7 @@ const diff = require('./cemerick-jsdifflib.js');
 const cookieParser = require('cookie-parser');
 const child_process = require('child_process');
 const captchapng = require('captchapng');
+const newId = require('./module/newID.js');
 
 const timeFormat = 'Y-m-d H:i:s';  // 날짜 및 시간 기본 형식
 const _ = undefined;
@@ -47,13 +48,6 @@ var loginHistory = {};
 var neededPages = {};
 
 // https://stackoverflow.com/questions/1349404/generate-random-string-characters-in-javascript
-/**
- * 무작위 문자열 생성
- * 
- * @param {string} chars 
- * @param {int} length 
- * @returns 생성된 무작위 문자열
- */
 function rndval(chars, length) {
 	var result = '';
 	var characters = chars;
@@ -135,17 +129,6 @@ const curs = {
 				});
 			}
 		});
-	}
-};
-
-const random = {
-	choice(x) {
-		switch (typeof (x)) {
-			case 'string':
-				return rndval(x, 1);
-			case 'object':
-				return x[Math.floor(Math.random() * x.length)];
-		}
 	}
 };
 
@@ -247,253 +230,6 @@ function getUserSetting(username, str, def = '') {
 	return userset[username][str];
 }
 
-/**
- * @theseed-version 4.16.0
- * 
- * 토론/편집요청 ID
- * 
- * @returns 토론/편집요청 ID
- */
-function newID() {
-	const a = [
-		'A',
-		'The',
-	];
-
-	const b = [
-		"Sleepy",
-		"Giddy",
-		"Smooth",
-		'Beautiful',
-		'Foamy',
-		'Frightened',
-		'Lazy',
-		'Wonderful',
-		'Happy',
-		'Sad',
-		'Broken',
-		'Angry',
-		'Mad',
-		'Upset',
-		'Red',
-		'Blue',
-		'Yellow',
-		'Impossible',
-		'Working',
-		'Pretty',
-		'Relaxed',
-		'Cold',
-		'Warm',
-		'Hot',
-		'Hard',
-		'Loud',
-		'Quiet',
-		'New',
-		'Old',
-		'Clean',
-		'Washable',
-		'Open',
-		'Closed',
-		'Outdated',
-		'Fixed',
-		'Living',
-		'Locked',
-		'Unused',
-		'Used',
-		'Sold',
-		'Sharp',
-		'Smashed',
-		'Crazy',
-		'Free',
-		'Fancy',
-		'Ugly',
-		'Big',
-		'Small',
-		'Fast',
-		'Ugly',
-		'Slow',
-		'Dirty',
-		'Unclassifiable',
-		'Cloudy',
-		'Solid',
-		'Different',
-		'Hungry',
-		'Thirsty',
-		'Boorish',
-		'Funny',
-		'Puffy',
-		'Greasy',
-		'Efficacious',
-		'Functional',
-		'Undesirable',
-		'Naughty',
-		'Gray',
-		'Busy',
-		'Acceptable',
-		'Stormy',
-		'Noisy',
-	];
-
-	const c = [
-		'And'
-	];
-
-	const d = [
-		"Station",
-		"Discount",
-		'Deer',
-		"Soup",
-		"Ice",
-		"Recorder",
-		"VPN",
-		"Installer",
-		"Uninstaller",
-		"Bot",
-		"Robot",
-		"Power",
-		"Point",
-		"Music",
-		'Event',
-		'Cat',
-		'Dog',
-		'Phone',
-		'Bush',
-		'Music',
-		'Picture',
-		'Lion',
-		'Angle',
-		'Horse',
-		'Mouse',
-		'Pencil',
-		'Box',
-		'Bag',
-		'Backpack',
-		'Chicken',
-		'CD',
-		'DVD',
-		'Diskette',
-		'FloppyDisk',
-		'Drive',
-		'CPU',
-		'Water',
-		'Glass',
-		'Memory',
-		'USB',
-		'Drive',
-		'Number',
-		'Letter',
-		'Fan',
-		'BIOS',
-		'Video',
-		'Button',
-		'Trash',
-		'Bottle',
-		'Cylinder',
-		'Ball',
-		'Key',
-		'Door',
-		'Plug',
-		'Flask',
-		'Cable',
-		'Radio',
-		'File',
-		'Disk',
-		'Camera',
-		'Titan',
-		'Ash',
-		'Tree',
-		'Plank',
-		'Script',
-		'Day',
-		'Car',
-		'ATV',
-		'Healer',
-		'Fox',
-		'Wolf',
-		'Carrot',
-		'Steak',
-		'Mushroom',
-		'Bandages',
-		'Berry',
-		'Tea',
-		'Charcoal',
-		'Limestone',
-		'Iron',
-		'Bar',
-		'Nail',
-		'Seed',
-		'Fiber',
-		'Leather',
-		'Fur',
-		'Aluminum',
-		'Tungsten',
-		'Transmission',
-		'Wheel',
-		'Fork',
-		'Engine',
-		'Transistor',
-		'Plastic',
-		'Wrench',
-		'Gasoline',
-		'Oil',
-		'Pickaxe',
-		'Hammer',
-		'Campfire',
-		'Garden',
-		'Furnace',
-		'Tower',
-		'Houseplant',
-		'Shirt',
-		'Sneakers',
-		'Helicopter',
-		'Trap',
-		'Card',
-		'Jar',
-		'Toy',
-		'Jet',
-		'Plane',
-		'Statement',
-		'Dimension',
-		'Toothpaste',
-		'Railway',
-		'Year',
-		'Stew',
-		'Farm',
-		'Zipper',
-		'Horses',
-		'Can',
-		'Cabbage',
-		'Eyes',
-		'Motion',
-		'Uncle',
-		'Teeth',
-		'Birthday',
-		'Downtown',
-	];
-
-	if (minor >= 17 || (minor == 16 && revision >= 1)) {
-		pa = random.choice(b);
-		pb = random.choice(b);
-		pc = random.choice(b);
-		pd = random.choice(d);
-
-		if (pa == pb) pb = 'Soft';
-		if (pa == pc) pc = 'Free';
-		if (pb == pc) pc = 'Cold';
-		return pa + pb + pc + pd;
-	} else {
-		pa = random.choice(a);
-		pb = random.choice(b);
-		pc = random.choice(c);
-		pd = random.choice(b);
-		pe = random.choice(d);
-		if (['A', 'E', 'O', 'U', 'I'].includes(pb[0]) && pa == 'A')
-			pa = 'An';
-		if (pd == pb) pd = 'Soft';
-		return pa + pb + pc + pd + pe;
-	}
-}
-
 // swig 필터
 swig.setFilter('encode_userdoc', function encodeUserdocURL(input) {
 	return encodeURIComponent('사용자:' + input);
@@ -555,6 +291,7 @@ try {
 	}
 }
 
+// bootstrap
 try {
 	hostconfig = require('./config.json');
 	if (hostconfig.uninitialized) throw 1;
@@ -685,50 +422,11 @@ try {
 		process.exit(0);
 	})();
 } if (_ready) {
-
-	/**
-	 * 버전 확인 (이상)
-	 * 
-	 * @param {string} v 버전('major.minor.revision')
-	 * @returns true: 해당 버전 이상 | false: 해당 버전 미만
-	 */
-	function ver(v) {
-		var sp = v.split('.');
-		var maj = Number(sp[0]);
-		var min = Number(sp[1]);
-		var rev = Number(sp[2]);
-
-		if (major > maj) return true;
-		if (major < maj) return false;
-		if (minor > min) return true;
-		if (minor < min) return false;
-		if (revision >= rev) return true;
-		if (revision < rev) return false;
-		return true;
-	}
-
-	/**
-	 * 버전 확인 (이하)
-	 * 
-	 * @param {string} v 버전('major.minor.revision')
-	 * @returns true: 해당 버전 이하 | false: 해당 버전 초과
-	 */
-	function verrev(v) {
-		var sp = v.split('.');
-		var maj = Number(sp[0]);
-		var min = Number(sp[1]);
-		var rev = Number(sp[2]);
-
-		if (major < maj) return true;
-		if (major > maj) return false;
-		if (minor < min) return true;
-		if (minor > min) return false;
-		if (revision <= rev) return true;
-		if (revision > rev) return false;
-		return true;
-	}
+	const versionHandler = require('./module/versionCheck.js');
 
 	// 나무마크
+	//TODO export
+	// const namumark = requireAsync('./module/namumark.js');
 	async function markdown(req, content, discussion = 0, title = '', flags = '', root = '') {
 		// markdown 아니고 namumark
 		flags = flags.split(' ');
@@ -1341,7 +1039,7 @@ try {
 					switch (el.tagName.toLowerCase()) {
 						case 'a':
 							el.setAttribute('target', '_blank');
-							if (ver('4.20.0')) {
+							if (versionHandler.ver('4.20.0')) {
 								el.className += (el.className ? ' ' : '') + 'wiki-link-external';
 							}
 					}
@@ -1398,7 +1096,7 @@ try {
 		data = data.replace(/<div class=wiki[-]heading[-]content>\n/g, '<div class=wiki-heading-content>');
 
 		// 글자 꾸미기
-		if (verrev('4.7.5')) data = data.replace(/['][']['][']['](((?![']['][']['][']).)+)[']['][']['][']/g, '<strong><i>$1</i></strong>');
+		if (versionHandler.verrev('4.7.5')) data = data.replace(/['][']['][']['](((?![']['][']['][']).)+)[']['][']['][']/g, '<strong><i>$1</i></strong>');
 		data = data.replace(/['][']['](((?![']['][']).)+)[']['][']/g, '<strong>$1</strong>');
 		data = data.replace(/[']['](((?!['][']).)+)['][']/g, '<i>$1</i>');
 		data = data.replace(/~~(((?!~~).)+)~~/g, '<del>$1</del>');
@@ -1408,7 +1106,7 @@ try {
 		data = data.replace(/\^\^(((?!\^\^).)+)\^\^/g, '<sup>$1</sup>');
 
 		// 글상자
-		if (verrev('4.7.4'))
+		if (versionHandler.verrev('4.7.4'))
 			data = data.replace(/{{[|](((?![|]}})(.|\n))+)[|]}}/g, '<div class=wiki-textbox>$1</div>');
 
 		// 매크로
@@ -1575,14 +1273,14 @@ try {
 			if (blockdata) {
 				data = `
 				<div style="border-width: 5px 1px 1px; border-style: solid; border-color: red gray gray; padding: 10px; margin-bottom: 10px;" onmouseover="this.style.borderTopColor=\'blue\';" onmouseout="this.style.borderTopColor=\'red\';">
-					<span style="font-size: 14pt;">이 사용자는 차단된 사용자입니다.${ver('4.18.0') ? ` (#${blockdata.id})` : ''}</span><br /><br />
+					<span style="font-size: 14pt;">이 사용자는 차단된 사용자입니다.${versionHandler.ver('4.18.0') ? ` (#${blockdata.id})` : ''}</span><br /><br />
 					이 사용자는 ${generateTime(toDate(blockdata.date), timeFormat)}에 ${blockdata.expiration == '0' ? '영구적으로' : (generateTime(toDate(blockdata.expiration), timeFormat) + '까지')} 차단되었습니다.<br />
 					차단 사유: ${html.escape(blockdata.note)}
 				</div>
 			` + data;
 			}
 			if (doc.namespace == '사용자') {
-				if (!ver('4.0.20')) {
+				if (!versionHandler.ver('4.0.20')) {
 					if (getperm('tribune', doc.title)) {
 						data = `
 						<div style="border-width: 5px 1px 1px; border-style: solid; border-color: orange gray gray; padding: 10px; margin-bottom: 10px;" onmouseover="this.style.borderTopColor=\'red\';" onmouseout="this.style.borderTopColor=\'orange\';">
@@ -1706,6 +1404,7 @@ try {
 
 		return data;
 	}
+	//TODOEND namumark
 
 	// 위키 설정
 	const config = {
@@ -1728,6 +1427,8 @@ try {
 		return ret;
 	}
 
+	//TODO export -> module/permHandler.js
+	//const permHandler = require('./module/permHandler.js');
 	/**
 	 * 권한 보유여부
 	 * 
@@ -1748,6 +1449,7 @@ try {
 		if (!permlist[ip_check(req)]) permlist[ip_check(req)] = [];
 		return permlist[ip_check(req)].includes(perm);
 	}
+	//TODOEND permHandler
 
 	// 비동기파일읽기
 	async function readFile(p, noerror = 0) {
@@ -1937,14 +1639,14 @@ try {
 		any: '아무나',
 		member: '로그인된 사용자',
 		admin: '관리자',
-		aclgroup: (ver('4.18.0') ? 'ACL 관리자' : undefined),
+		aclgroup: (versionHandler.ver('4.18.0') ? 'ACL 관리자' : undefined),
 		member_signup_15days_ago: '가입한지 15일 지난 사용자',
-		suspend_account: (ver('4.18.0') ? undefined : '차단된 사용자'),
-		blocked_ipacl: (ver('4.18.0') >= 18 ? undefined : '차단된 아이피'),
+		suspend_account: (versionHandler.ver('4.18.0') ? undefined : '차단된 사용자'),
+		blocked_ipacl: (versionHandler.ver('4.18.0') >= 18 ? undefined : '차단된 아이피'),
 		document_contributor: '해당 문서 기여자',
-		contributor: (ver('4.7.0') >= 7 ? '위키 기여자' : undefined),
-		match_username_and_document_title: (ver('4.5.9') ? '문서 제목과 사용자 이름이 일치' : undefined),
-		ip: (ver('4.20.0') ? '아이피' : undefined),
+		contributor: (versionHandler.ver('4.7.0') >= 7 ? '위키 기여자' : undefined),
+		match_username_and_document_title: (versionHandler.ver('4.5.9') ? '문서 제목과 사용자 이름이 일치' : undefined),
+		ip: (versionHandler.ver('4.20.0') ? '아이피' : undefined),
 	};
 
 	// 차단된 사용자 제외 ACL 권한
@@ -1995,8 +1697,8 @@ try {
 		const codes = {
 			username: '사용자 이름',
 			ip: 'IP 주소',
-			password: ver('4.18.6') ? '비밀번호' : '암호',
-			password_check: ver('4.18.6') ? '비밀번호 확인' : '암호 확인',
+			password: versionHandler.ver('4.18.6') ? '비밀번호' : '암호',
+			password_check: versionHandler.ver('4.18.6') ? '비밀번호 확인' : '암호 확인',
 		};
 
 		return codes[code] || code;
@@ -2053,13 +1755,13 @@ try {
 
 	// 오류화면 표시
 	async function showError(req, code, ...params) {
-		return await render(req, ver('4.13.0') ? '오류' : '문제가 발생했습니다!', `${ver('4.13.0') ? '<div>' : '<h2>'}${typeof code == 'object' ? (code.msg || fetchErrorString(code.code, code.tag)) : fetchErrorString(code, ...params)}${ver('4.13.0') ? '</div>' : '</h2>'}`, {}, _, _, 'error');
+		return await render(req, versionHandler.ver('4.13.0') ? '오류' : '문제가 발생했습니다!', `${versionHandler.ver('4.13.0') ? '<div>' : '<h2>'}${typeof code == 'object' ? (code.msg || fetchErrorString(code.code, code.tag)) : fetchErrorString(code, ...params)}${versionHandler.ver('4.13.0') ? '</div>' : '</h2>'}`, {}, _, _, 'error');
 	}
 
 	// 닉네임/아이피 파싱
 	function ip_pas(ip = '', ismember = '', nobold) {
 		var style = '';
-		/*if(ver('4.18.0')) {
+		/*if(versionHandler.ver('4.18.0')) {
 			var dbdata = await curs.execute("select aclgroup from aclgroup where type = ? and username = ?", (ismember == 'author' ? 'username' : 'ip'), ip);
 			if(dbdata.length) {
 				var dbdata2 = await curs.execute("select css from aclgroup_groups where name = ?", [dbdata[0].aclgroup]);
@@ -2084,8 +1786,8 @@ try {
 
 		for (let row of ipacl) {
 			if (ipRangeCheck(ip, row.cidr)) {
-				if (row.al == '1') msg = '해당 IP는 반달 행위가 자주 발생하는 공용 아이피이므로 로그인이 필요합니다.<br />(이 메세지는 ' + (!ver('4.11.0') ? '본인이 반달을 했다기 보다는 해당 통신사를 쓰는' : '같은 인터넷 공급업체를 사용하는') + ' 다른 누군가가 해서 발생했을 확률이 높습니다.)<br />차단 만료일 : ' + (row.expiration == '0' ? '무기한' : new Date(Number(row.expiration))) + '<br />차단 사유 : ' + row.note;
-				else msg = 'IP가 차단되었습니다.' + (!ver('4.6.0') ? ' <a href="https://board.namu.wiki/whyiblocked">게시판</a>으로 문의해주세요.' : '') + '<br />차단 만료일 : ' + (row.expiration == '0' ? '무기한' : new Date(Number(row.expiration))) + '<br />차단 사유 : ' + row.note;
+				if (row.al == '1') msg = '해당 IP는 반달 행위가 자주 발생하는 공용 아이피이므로 로그인이 필요합니다.<br />(이 메세지는 ' + (!versionHandler.ver('4.11.0') ? '본인이 반달을 했다기 보다는 해당 통신사를 쓰는' : '같은 인터넷 공급업체를 사용하는') + ' 다른 누군가가 해서 발생했을 확률이 높습니다.)<br />차단 만료일 : ' + (row.expiration == '0' ? '무기한' : new Date(Number(row.expiration))) + '<br />차단 사유 : ' + row.note;
+				else msg = 'IP가 차단되었습니다.' + (!versionHandler.ver('4.6.0') ? ' <a href="https://board.namu.wiki/whyiblocked">게시판</a>으로 문의해주세요.' : '') + '<br />차단 만료일 : ' + (row.expiration == '0' ? '무기한' : new Date(Number(row.expiration))) + '<br />차단 사유 : ' + row.note;
 				return msg;
 			}
 		} return false;
@@ -2093,7 +1795,7 @@ try {
 
 	// 계정 차단 여부
 	async function userblocked(username) {
-		if (ver('4.18.0')) {
+		if (versionHandler.ver('4.18.0')) {
 			await curs.execute("delete from aclgroup where not expiration = '0' and ? > cast(expiration as integer)", [Number(getTime())]);
 			var data = await curs.execute("select id, type, username, note, expiration, date from aclgroup where aclgroup = ? and username = ?", ['차단된 사용자', username]);
 			if (data.length) {
@@ -2120,6 +1822,8 @@ try {
 	}
 
 	// ACL 검사
+	//TODO export -> module/acltools.js
+	//internal: const versionHandler = require('./versionCheck.js');
 	async function getacl(req, title, namespace, type, getmsg) {
 		var ns = await curs.execute("select id, action, expiration, condition, conditiontype from acl where namespace = ? and type = ? and ns = '1' order by cast(id as integer) asc", [namespace, type]);
 		var doc = await curs.execute("select id, action, expiration, condition, conditiontype from acl where title = ? and namespace = ? and type = ? and ns = '0' order by cast(id as integer) asc", [title, namespace, type]);
@@ -2138,7 +1842,7 @@ try {
 		}
 
 		async function f(table, isns) {
-			if (!flag && (!table.length || (ver('4.16.0') && type == 'read'))) {
+			if (!flag && (!table.length || (versionHandler.ver('4.16.0') && type == 'read'))) {
 				flag = 1;
 				return await f(ns, 1);
 			}
@@ -2175,7 +1879,7 @@ try {
 								if (new Date().getTime() >= Number(data.time) + 1296000000) ret = 1;
 							}
 						} break; case 'blocked_ipacl': {
-							if (!ver('4.18.0')) for (let row of ipacl) {
+							if (!versionHandler.ver('4.18.0')) for (let row of ipacl) {
 								if (ipRangeCheck(ip_check(req, 1), row.cidr) && !(islogin(req) && row.al == '1')) {
 									ret = 1;
 									if (row.al == '1') msg = '해당 IP는 반달 행위가 자주 발생하는 공용 아이피이므로 로그인이 필요합니다.<br />(이 메세지는 본인이 반달을 했다기 보다는 해당 통신사를 쓰는 다른 누군가가 해서 발생했을 확률이 높습니다.)<br />차단 만료일 : ' + (row.expiration == '0' ? '무기한' : new Date(Number(row.expiration))) + '<br />차단 사유 : ' + row.note;
@@ -2185,7 +1889,7 @@ try {
 							}
 						} break; case 'suspend_account': {
 							if (!islogin(req)) break;
-							if (ver('4.18.0')) break;
+							if (versionHandler.ver('4.18.0')) break;
 							const data = await userblocked(ip_check(req));
 							if (data) {
 								ret = 1;
@@ -2206,7 +1910,7 @@ try {
 
 							ret = 1;
 						} break; case 'contributor': {
-							if (!ver('4.7.0')) break;
+							if (!versionHandler.ver('4.7.0')) break;
 
 							var data = await curs.execute("select rev from history where username = ? and ismember = ?", [ip_check(req), islogin(req) ? 'author' : 'ip']);
 							if (!data.length) break;
@@ -2222,7 +1926,7 @@ try {
 
 							ret = 1;
 						} break; case 'match_username_and_document_title': {
-							if (ver('4.11.0')) {
+							if (versionHandler.ver('4.11.0')) {
 								if (islogin(req) && ip_check(req) == title.split('/')[0]) ret = 1;
 							} else {
 								if (islogin(req) && ip_check(req) == title) ret = 1;
@@ -2245,7 +1949,7 @@ try {
 							r.msg = msg;
 							r.m1 = aclperms[row.condition] || row.condition;
 							break;
-						} else if (row.action == 'gotons' && ver('4.18.0')) {
+						} else if (row.action == 'gotons' && versionHandler.ver('4.18.0')) {
 							r = await f(ns, 1);
 							break;
 						} else break;
@@ -2259,7 +1963,7 @@ try {
 							r.ret = 0;
 							r.m1 = 'member:' + row.condition;
 							break;
-						} else if (row.action == 'gotons' && ver('4.18.0')) {
+						} else if (row.action == 'gotons' && versionHandler.ver('4.18.0')) {
 							r = await f(ns, 1);
 							break;
 						} else break;
@@ -2273,12 +1977,12 @@ try {
 							r.ret = 0;
 							r.m1 = 'ip:' + row.condition;
 							break;
-						} else if (row.action == 'gotons' && ver('4.18.0')) {
+						} else if (row.action == 'gotons' && versionHandler.ver('4.18.0')) {
 							r = await f(ns, 1);
 							break;
 						} else break;
 					} else if (row.action == 'allow') r.m2 += 'ip:' + row.condition + ' OR ';
-				} else if (row.conditiontype == 'geoip' && ver('4.5.9')) {
+				} else if (row.conditiontype == 'geoip' && versionHandler.ver('4.5.9')) {
 					if (geoip.lookup(ip_check(req, 1)).country == row.condition) {
 						if (row.action == 'allow') {
 							r.ret = 1;
@@ -2287,12 +1991,12 @@ try {
 							r.ret = 0;
 							r.m1 = 'geoip:' + row.condition;
 							break;
-						} else if (row.action == 'gotons' && ver('4.18.0')) {
+						} else if (row.action == 'gotons' && versionHandler.ver('4.18.0')) {
 							r = await f(ns, 1);
 							break;
 						} else break;
 					} else if (row.action == 'allow') r.m2 += 'geoip:' + row.condition + ' OR ';
-				} else if (row.conditiontype == 'aclgroup' && ver('4.18.0')) {
+				} else if (row.conditiontype == 'aclgroup' && versionHandler.ver('4.18.0')) {
 					var ag = null;
 
 					for (let item of (aclgroup[row.condition] || [])) {
@@ -2311,7 +2015,7 @@ try {
 							else
 								r.msg = 'ACL그룹 ' + row.condition + ' #' + ag.id + '에 있기 때문에 ' + acltype[type] + ' 권한이 부족합니다.<br />만료일 : ' + (ag.expiration == '0' ? '무기한' : new Date(Number(ag.expiration))) + '<br />사유 : ' + ag.note;
 							break;
-						} else if (row.action == 'gotons' && ver('4.18.0')) {
+						} else if (row.action == 'gotons' && versionHandler.ver('4.18.0')) {
 							r = await f(ns, 1);
 							break;
 						} else break;
@@ -2325,13 +2029,14 @@ try {
 		const r = await f(doc);
 		if (!getmsg) return r.ret;
 		if (!r.ret && !r.msg) {
-			r.msg = `${ver('4.7.0') && !r.m1 && !r.m2 ? 'ACL에 허용 규칙이 없기 때문에 ' : ''}${r.m1 && minor >= 7 ? r.m1 + '이기 때문에 ' : ''}${acltype[type]} 권한이 부족합니다.${r.m2 && minor >= 7 ? ' ' + r.m2.replace(/\sOR\s$/, '') + '(이)여야 합니다. ' : ''}`;
-			if (ver('4.5.9')) r.msg += ` 해당 문서의 <a href="/acl/${encodeURIComponent(totitle(title, namespace) + '')}">ACL 탭</a>을 확인하시기 바랍니다.`;
+			r.msg = `${versionHandler.ver('4.7.0') && !r.m1 && !r.m2 ? 'ACL에 허용 규칙이 없기 때문에 ' : ''}${r.m1 && minor >= 7 ? r.m1 + '이기 때문에 ' : ''}${acltype[type]} 권한이 부족합니다.${r.m2 && minor >= 7 ? ' ' + r.m2.replace(/\sOR\s$/, '') + '(이)여야 합니다. ' : ''}`;
+			if (versionHandler.ver('4.5.9')) r.msg += ` 해당 문서의 <a href="/acl/${encodeURIComponent(totitle(title, namespace) + '')}">ACL 탭</a>을 확인하시기 바랍니다.`;
 			if (type == 'edit' && getmsg != 2)
 				r.msg += ' 대신 <strong><a href="/new_edit_request/' + encodeURIComponent(totitle(title, namespace) + '') + '">편집 요청</a></strong>을 생성하실 수 있습니다.';
 		}
 		return r.msg;  // 거부되었으면 오류 메시지 내용 반환, 허용은 빈 문자열
 	}
+	//TODOEND acltools.js
 
 	// 앞뒤 페이지 이동 단추
 	function navbtn(total, start, end, href) {
@@ -2419,6 +2124,7 @@ try {
 	}
 	cacheSkinList();
 
+	//TODO export -> module/captcha.js
 	function generateCaptcha(req, num) {
 		if (!hostconfig.enable_captcha) return '';
 
@@ -2498,6 +2204,7 @@ try {
 
 		return true;
 	}
+	//TODOEND captcha
 
 	// HTTPS 리다이렉트
 	/*
@@ -2518,7 +2225,7 @@ try {
 
 	// 자동 로그인 & 차단 로그아웃
 	wiki.all('*', async function (req, res, next) {
-		if (!ver('4.1.0')) {
+		if (!versionHandler.ver('4.1.0')) {
 			if (islogin(req) && await userblocked(ip_check(req))) {
 				delete req.session.username;
 				return next();
@@ -2656,6 +2363,7 @@ try {
 		return ret;
 	}
 
+	//TODO export -> module/licenseHandler.js
 	/**
 	 * 버전 넘버를 받아서 "긴 라이선스"를 리턴.
 	 * 
@@ -2677,7 +2385,7 @@ try {
 
 		// 풀 라이선스
 		var licefull = `
-			${ver('4.11.1')/* 진짜 더시드처럼, 버전마다 다르게 */ ? `<h2>imitated-seed</h2>
+			${versionHandler.ver('4.11.1')/* 진짜 더시드처럼, 버전마다 다르게 */ ? `<h2>imitated-seed</h2>
 			<p>ver.${lastupddate}${ispatched ? `(Patched by ${patcher} at ${patchdate})` : ''}<br>
 				(the seed v${major}.${minor}.${revision})</p>` : `<h2>imitated-seed ver.${lastupddate}</h2>
 			<p>(Patched by ${patcher} at ${patchdate})<br>
@@ -2713,7 +2421,7 @@ try {
 
 		if (hostconfig.replicate_theseed_license) {
 			licepage = '';
-			if (ver('4.11.1')) {
+			if (versionHandler.ver('4.11.1')) {
 				licepage += `<h2>the seed</h2><p>v${major}.${minor}.${revision}</p>`;
 			} else {
 				licepage += `<h2>the seed (v${major}.${minor}.${revision})</h2>`;
@@ -2723,7 +2431,7 @@ try {
 			
 			<h3>Contributors</h3>
 			<ul class=wiki-list>
-				${ver('4.13.0') ? `
+				${versionHandler.ver('4.13.0') ? `
 						<li>namu@theseed.io (backend & frontend)</li>
 						<li>PPPP@theseed.io (old frontend)</li>
 						<li>kasio@theseed.io (old render)</li>
@@ -2748,7 +2456,7 @@ try {
 					Swig is licensed under the <a rel="license" href="https://github.com/paularmstrong/swig/blob/master/LICENSE">MIT license</a>.
 				</li>
 				
-				${ver('4.13.0') ? `
+				${versionHandler.ver('4.13.0') ? `
 					<li><pre>/*!
  * nano-assign v1.0.1
  * (c) 2018-present egoist &lt;0x142857@gmail.com&gt;
@@ -2833,7 +2541,7 @@ and limitations under the License.
 		`;
 		}
 
-		if (!ver('4.13.0')) {
+		if (!versionHandler.ver('4.13.0')) {
 			licepage += await readFile('./skins/' + getSkin(req) + '/license.html')
 		}
 
@@ -2842,6 +2550,7 @@ and limitations under the License.
 			${licepage}
 	` + '</div>', {}, _, _, 'license'));
 	});
+	//TODOEND licenseHandler
 
 	function redirectToFrontPage(req, res) {
 		res.redirect('/w/' + (config.getString('wiki.front_page', 'FrontPage')));
@@ -3052,7 +2761,7 @@ and limitations under the License.
 
 		const aclmsg = await getacl(req, doc.title, doc.namespace, 'read', 1);
 		if (aclmsg) {
-			if (!ver('4.5.7')) return res.status(403).send(await showError(req, 'permission_read'));
+			if (!versionHandler.ver('4.5.7')) return res.status(403).send(await showError(req, 'permission_read'));
 			httpstat = 403;
 			error = err('error', { code: 'permission_read', msg: aclmsg });
 			content = '<h2>' + aclmsg + '</h2>';
@@ -3107,7 +2816,7 @@ and limitations under the License.
 				}
 			} else content = await markdown(req, rawContent[0].content, 0, doc + '');
 
-			if (rev && ver('4.20.0') && hostconfig.namuwiki_exclusive) content = alertBalloon('<strong>[주의!]</strong> 문서의 이전 버전(' + generateTime(toDate(data[0].time), timeFormat) + '에 수정)을 보고 있습니다. <a href="/w/' + encodeURIComponent(doc + '') + '">최신 버전으로 이동</a>', 'danger', true, '', 1) + content;
+			if (rev && versionHandler.ver('4.20.0') && hostconfig.namuwiki_exclusive) content = alertBalloon('<strong>[주의!]</strong> 문서의 이전 버전(' + generateTime(toDate(data[0].time), timeFormat) + '에 수정)을 보고 있습니다. <a href="/w/' + encodeURIComponent(doc + '') + '">최신 버전으로 이동</a>', 'danger', true, '', 1) + content;
 			if (req.query['from']) {
 				content = alertBalloon('<a href="' + encodeURIComponent(req.query['from']) + '?noredirect=1" class=document>' + html.escape(req.query['from']) + '</a>에서 넘어옴', 'info', false) + content;
 			}
@@ -3127,8 +2836,8 @@ and limitations under the License.
 		}
 
 		res.status(httpstat).send(await render(req, totitle(doc.title, doc.namespace) + (rev ? (' (r' + rev + ' 판)') : ''), content, {
-			star_count: ver('4.9.0') && rawContent.length ? star_count : undefined,
-			starred: ver('4.9.0') && rawContent.length ? starred : undefined,
+			star_count: versionHandler.ver('4.9.0') && rawContent.length ? star_count : undefined,
+			starred: versionHandler.ver('4.9.0') && rawContent.length ? starred : undefined,
 			date: Math.floor(lastedit / 1000),
 			document: doc,
 			rev,
@@ -3137,7 +2846,7 @@ and limitations under the License.
 		}, _, error, viewname));
 	});
 
-	if (ver('4.9.0')) wiki.get(/^\/member\/star\/(.*)$/, async (req, res) => {
+	if (versionHandler.ver('4.9.0')) wiki.get(/^\/member\/star\/(.*)$/, async (req, res) => {
 		const title = req.params[0];
 		if (!islogin(req)) return res.redirect('/member/login?redirect=' + encodeURIComponent('/member/star/' + title));
 		const doc = processTitle(title);
@@ -3153,7 +2862,7 @@ and limitations under the License.
 		res.redirect('/w/' + encodeURIComponent(title));
 	});
 
-	if (ver('4.9.0')) wiki.get(/^\/member\/unstar\/(.*)$/, async (req, res) => {
+	if (versionHandler.ver('4.9.0')) wiki.get(/^\/member\/unstar\/(.*)$/, async (req, res) => {
 		const title = req.params[0];
 		if (!islogin(req)) return res.redirect('/member/login?redirect=' + encodeURIComponent('/member/star/' + title));
 		const doc = processTitle(title);
@@ -3171,7 +2880,7 @@ and limitations under the License.
 	});
 
 
-	if (ver('4.9.0')) wiki.get(/^\/member\/starred_documents$/, async (req, res) => {
+	if (versionHandler.ver('4.9.0')) wiki.get(/^\/member\/starred_documents$/, async (req, res) => {
 		if (!islogin(req)) return res.redirect('/member/login?redirect=' + encodeURIComponent('/member/starred_documents'));
 
 		var dd = await curs.execute("select title, namespace, lastedit from stars where username = ? order by cast(lastedit as integer) desc", [ip_check(req)]);
@@ -3221,7 +2930,7 @@ and limitations under the License.
 			return res.status(404).send(await showError(req, 'document_not_found'));
 		}
 
-		if (!ver('4.16.0')) {
+		if (!versionHandler.ver('4.16.0')) {
 			res.setHeader('Content-Type', 'text/plain');
 			return res.send(content);
 		}
@@ -3247,7 +2956,7 @@ and limitations under the License.
 			return res.status(403).send(await showError(req, err('error', { code: 'permission_read', msg: aclmsg })));
 		}
 
-		if (!doc.title || ['특수기능', '투표', '토론'].includes(doc.namespace) || !ver('4.7.3') && doc.title.includes('://')) return res.status(400).send(await showError(req, 'invalid_title'));
+		if (!doc.title || ['특수기능', '투표', '토론'].includes(doc.namespace) || !versionHandler.ver('4.7.3') && doc.title.includes('://')) return res.status(400).send(await showError(req, 'invalid_title'));
 
 		var rawContent = await curs.execute("select content from documents where title = ? and namespace = ?", [doc.title, doc.namespace]);
 		if (!rawContent[0]) rawContent = '';
@@ -3272,7 +2981,7 @@ and limitations under the License.
 
 			<ul class="nav nav-tabs" role="tablist" style="height: 38px;">
 				<li class="nav-item">
-					<a class="nav-link active" data-toggle="tab" href="#edit" role="tab">${ver('4.15.0') ? 'RAW 편집' : '편집'}</a>
+					<a class="nav-link active" data-toggle="tab" href="#edit" role="tab">${versionHandler.ver('4.15.0') ? 'RAW 편집' : '편집'}</a>
 				</li>
 				<li class="nav-item">
 					<a id="previewLink" class="nav-link" data-toggle="tab" href="#preview" role="tab">미리보기</a>
@@ -3289,7 +2998,7 @@ and limitations under the License.
 			</div>
 	`;
 
-		if (ver('4.7.0') && !ver('4.10.0')) content = `
+		if (versionHandler.ver('4.7.0') && !versionHandler.ver('4.10.0')) content = `
 		<p>
 			<a href="https://forum.theseed.io/topic/232/%EC%9D%98%EA%B2%AC%EC%88%98%EB%A0%B4-%EB%A6%AC%EB%8B%A4%EC%9D%B4%EB%A0%89%ED%8A%B8-%EB%AC%B8%EB%B2%95-%EB%B3%80%EA%B2%BD" target=_blank style="font-weight: bold; color: purple; font-size: 16px;">[의견수렴] 리다이렉트 문법 변경</a>
 		</p>
@@ -3419,7 +3128,7 @@ and limitations under the License.
 			var data = await curs.execute("select title from documents where title = ? and namespace = ?", [doc.title, doc.namespace]);
 			if (!data.length) {
 				if (['파일', '사용자'].includes(doc.namespace)) {
-					if ((ver('4.11.0') && !doc.title.includes('/')) || !ver('4.11.0')) {
+					if ((versionHandler.ver('4.11.0') && !doc.title.includes('/')) || !versionHandler.ver('4.11.0')) {
 						error = err('alert', { code: 'invalid_namespace' });
 						content = error + content;
 						break;
@@ -3458,7 +3167,7 @@ and limitations under the License.
 		}, '', error, 'edit'));
 	});
 
-	if (ver('4.20.0')) {
+	if (versionHandler.ver('4.20.0')) {
 		wiki.get(/^\/api\/edit\/(.*)$/, async (req, res) => {
 			var auth = req.headers['authorization'] || '';
 			if (!auth.match(/^Bearer\s([a-zA-Z0-9\=\+\/]+)$/))
@@ -3552,7 +3261,7 @@ and limitations under the License.
 			var data = await curs.execute("select title from documents where title = ? and namespace = ?", [doc.title, doc.namespace]);
 			if (!data.length) {
 				if (['파일', '사용자'].includes(doc.namespace)) {
-					if ((ver('4.11.0') && !doc.title.includes('/')) || !ver('4.11.0')) {
+					if ((versionHandler.ver('4.11.0') && !doc.title.includes('/')) || !versionHandler.ver('4.11.0')) {
 						return res.status(400).json({
 							status: err('raw', { code: 'invalid_namespace' }),
 						});
@@ -3637,7 +3346,7 @@ and limitations under the License.
 	`);
 	});
 
-	if (ver('4.20.0')) wiki.post(/^\/commentpreview$/, async (req, res) => {
+	if (versionHandler.ver('4.20.0')) wiki.post(/^\/commentpreview$/, async (req, res) => {
 		const { id } = req.body;
 
 		var content = ``;
@@ -3647,7 +3356,7 @@ and limitations under the License.
 				<div class="r-head">
 					<span class=num>
 						<a id="">#${id}</a>&nbsp;
-					</span> ${ip_pas(ip_check(req), islogin(req) ? 'author' : 'ip', 1).replace('<a ', hasperm(req, 'admin') ? '<a style="font-weight: bold;" ' : '<a ')}${islogin(req) && await userblocked(ip_check(req)) ? ` <small>(${ver('4.11.3') ? '차단됨' : '차단된 사용자'})</small>` : ''}${!islogin(req) && await ipblocked(ip_check(req)) ? ` <small>(${ver('4.11.3') ? '차단됨' : '차단된 아이피'})</small>` : ''} <span class=pull-right>${generateTime(toDate(getTime()), timeFormat)}</span>
+					</span> ${ip_pas(ip_check(req), islogin(req) ? 'author' : 'ip', 1).replace('<a ', hasperm(req, 'admin') ? '<a style="font-weight: bold;" ' : '<a ')}${islogin(req) && await userblocked(ip_check(req)) ? ` <small>(${versionHandler.ver('4.11.3') ? '차단됨' : '차단된 사용자'})</small>` : ''}${!islogin(req) && await ipblocked(ip_check(req)) ? ` <small>(${versionHandler.ver('4.11.3') ? '차단됨' : '차단된 아이피'})</small>` : ''} <span class=pull-right>${generateTime(toDate(getTime()), timeFormat)}</span>
 				</div>
 				
 				<div class="r-body">
@@ -3660,12 +3369,12 @@ and limitations under the License.
 		res.send(content);
 	});
 
-	if (ver('4.14.0')) wiki.get(/^\/xref\/(.*)/, (req, res) => {
+	if (versionHandler.ver('4.14.0')) wiki.get(/^\/xref\/(.*)/, (req, res) => {
 		const title = req.params[0];
 		res.redirect('/backlink/' + encodeURIComponent(title) + '?flag=' + encodeURIComponent(req.query['flag'] || '0') + '&namespace=' + encodeURIComponent(req.query['namespace'] || '문서'));
 	});
 
-	wiki.get(ver('4.14.0') ? /^\/backlink\/(.*)/ : /^\/xref\/(.*)/, async (req, res) => {
+	wiki.get(versionHandler.ver('4.14.0') ? /^\/backlink\/(.*)/ : /^\/xref\/(.*)/, async (req, res) => {
 		const title = req.params[0];
 		const doc = processTitle(title);
 		const flag = req.query['flag'] || '0';
@@ -3701,7 +3410,7 @@ and limitations under the License.
 		const dbdata = await curs.execute("select title, namespace, type from backlink where not type = 'category' and link = ? and linkns = ? " + (flag != '0' ? " and type = ?" : '') + sa + " limit 50", [doc.title, doc.namespace].concat(flag != '0' ? [type] : []).concat(sd));
 
 		try {
-			var navbtns = navbtnss(fd[0].title, ld[0].title, dbdata[0].title, dbdata[dbdata.length - 1].title, (ver('4.14.0') ? '/backlink/' : '/xref/') + encodeURIComponent(title));
+			var navbtns = navbtnss(fd[0].title, ld[0].title, dbdata[0].title, dbdata[dbdata.length - 1].title, (versionHandler.ver('4.14.0') ? '/backlink/' : '/xref/') + encodeURIComponent(title));
 		} catch (e) {
 			var navbtns = navbtn(0, 0, 0, 0);
 		}
@@ -3912,7 +3621,7 @@ and limitations under the License.
 		}, _, null, 'blame'));
 	});
 
-	wiki.get(ver('4.16.0') ? /^\/edit_request\/([a-zA-Z]+)\/preview$/ : /^\/edit_request\/(\d+)\/preview$/, async (req, res, next) => {
+	wiki.get(versionHandler.ver('4.16.0') ? /^\/edit_request\/([a-zA-Z]+)\/preview$/ : /^\/edit_request\/(\d+)\/preview$/, async (req, res, next) => {
 		const id = req.params[0];
 		var data = await curs.execute("select title, namespace, state, content, baserev, username, ismember, log, date, processor, processortype, processtime, lastupdate, reason, rev from edit_requests where not deleted = '1' and (id = ? or slug = ?)", [id, id]);
 		if (!data.length) return res.send(await showError(req, 'edit_request_not_found'));
@@ -3968,7 +3677,7 @@ and limitations under the License.
 	`);
 	});
 
-	wiki.post(ver('4.16.0') ? /^\/edit_request\/([a-zA-Z]+)\/close$/ : /^\/edit_request\/(\d+)\/close$/, async (req, res, next) => {
+	wiki.post(versionHandler.ver('4.16.0') ? /^\/edit_request\/([a-zA-Z]+)\/close$/ : /^\/edit_request\/(\d+)\/close$/, async (req, res, next) => {
 		const id = req.params[0];
 		var data = await curs.execute("select title, namespace, state, content, baserev, username, ismember, log, date, processor, processortype, processtime, lastupdate, reason, rev from edit_requests where not deleted = '1' and (id = ? or slug = ?)", [id, id]);
 		if (!data.length) return res.send(await showError(req, 'edit_request_not_found'));
@@ -3980,11 +3689,11 @@ and limitations under the License.
 		if (item.state != 'open') {
 			return res.send(await showError(req, 'edit_request_not_open'));
 		}
-		await curs.execute("update edit_requests set state = 'closed', processor = ?, processortype = ?, processtime = ?, reason = ? where " + (ver('4.16.0') ? 'slug' : 'id') + " = ?", [ip_check(req), islogin(req) ? 'author' : 'ip', getTime(), req.body['close_reason'] || '', id]);
+		await curs.execute("update edit_requests set state = 'closed', processor = ?, processortype = ?, processtime = ?, reason = ? where " + (versionHandler.ver('4.16.0') ? 'slug' : 'id') + " = ?", [ip_check(req), islogin(req) ? 'author' : 'ip', getTime(), req.body['close_reason'] || '', id]);
 		return res.redirect('/edit_request/' + id);
 	});
 
-	wiki.post(ver('4.16.0') ? /^\/edit_request\/([a-zA-Z]+)\/accept$/ : /^\/edit_request\/(\d+)\/accept$/, async (req, res, next) => {
+	wiki.post(versionHandler.ver('4.16.0') ? /^\/edit_request\/([a-zA-Z]+)\/accept$/ : /^\/edit_request\/(\d+)\/accept$/, async (req, res, next) => {
 		const id = req.params[0];
 		var data = await curs.execute("select title, namespace, state, content, baserev, username, ismember, log, date, processor, processortype, processtime, lastupdate, reason, rev from edit_requests where not deleted = '1' and (id = ? or slug = ?)", [id, id]);
 		if (!data.length) return res.send(await showError(req, 'edit_request_not_found'));
@@ -4017,12 +3726,12 @@ and limitations under the License.
 					values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [
 			item.title, item.namespace, item.content, String(rev), item.username, getTime(), changes, item.log, '0', '-1', item.ismember, 'normal', id
 		]);
-		await curs.execute("update edit_requests set state = 'accepted', processor = ?, processortype = ?, processtime = ?, rev = ? where " + (ver('4.16.0') ? 'slug' : 'id') + " = ?", [ip_check(req), islogin(req) ? 'author' : 'ip', getTime(), String(rev), id]);
+		await curs.execute("update edit_requests set state = 'accepted', processor = ?, processortype = ?, processtime = ?, rev = ? where " + (versionHandler.ver('4.16.0') ? 'slug' : 'id') + " = ?", [ip_check(req), islogin(req) ? 'author' : 'ip', getTime(), String(rev), id]);
 		markdown(req, item.text, 0, doc + '', 'backlinkinit');
 		return res.redirect('/edit_request/' + id);
 	});
 
-	wiki.get(ver('4.16.0') ? /^\/edit_request\/([a-zA-Z]+)$/ : /^\/edit_request\/(\d+)$/, async (req, res, next) => {
+	wiki.get(versionHandler.ver('4.16.0') ? /^\/edit_request\/([a-zA-Z]+)$/ : /^\/edit_request\/(\d+)$/, async (req, res, next) => {
 		const id = req.params[0];
 		var data = await curs.execute("select title, namespace, state, content, baserev, username, ismember, log, date, processor, processortype, processtime, lastupdate, reason, rev from edit_requests where not deleted = '1' and (slug = ? or id = ?)", [id, id]);
 		if (!data.length) return res.send(await showError(req, 'edit_request_not_found'));
@@ -4112,7 +3821,7 @@ and limitations under the License.
 		if (item.state != 'accepted') {
 			var difftable = diff(base, item.content, '1', '2');
 
-			if (ver('4.13.0')) {
+			if (versionHandler.ver('4.13.0')) {
 				diffvw = `
 				<ul class="nav nav-tabs" role="tablist" style="height: 38px;">
 					<li class="nav-item">
@@ -4146,7 +3855,7 @@ and limitations under the License.
 		}, _, error, 'edit_request'));
 	});
 
-	wiki.all(ver('4.16.0') ? /^\/edit_request\/([a-zA-Z]+)\/edit$/ : /^\/edit_request\/(\d+)\/edit$/, async (req, res, next) => {
+	wiki.all(versionHandler.ver('4.16.0') ? /^\/edit_request\/([a-zA-Z]+)\/edit$/ : /^\/edit_request\/(\d+)\/edit$/, async (req, res, next) => {
 		if (!['POST', 'GET'].includes(req.method)) return next();
 
 		const id = req.params[0];
@@ -4209,7 +3918,7 @@ and limitations under the License.
 		if (req.method == 'POST') do {
 			const agree = req.body['agree'];
 			if (!agree) { content = (error = err('alert', { code: 'validator_required', tag: 'agree' })) + content; break; }
-			await curs.execute("update edit_requests set lastupdate = ?, content = ?, log = ? where " + (ver('4.16.0') ? 'slug' : 'id') + " = ?", [getTime(), req.body['text'] || '', req.body['log'] || '', id]);
+			await curs.execute("update edit_requests set lastupdate = ?, content = ?, log = ? where " + (versionHandler.ver('4.16.0') ? 'slug' : 'id') + " = ?", [getTime(), req.body['text'] || '', req.body['log'] || '', id]);
 			return res.redirect('/edit_request/' + id);
 		} while (0);
 
@@ -4255,7 +3964,7 @@ and limitations under the License.
 
 			<ul class="nav nav-tabs" role="tablist" style="height: 38px;">
 				<li class="nav-item">
-					<a class="nav-link active" data-toggle="tab" href="#edit" role="tab">${ver('4.15.0') ? 'RAW 편집' : '편집'}</a>
+					<a class="nav-link active" data-toggle="tab" href="#edit" role="tab">${versionHandler.ver('4.15.0') ? 'RAW 편집' : '편집'}</a>
 				</li>
 				<li class="nav-item">
 					<a id="previewLink" class="nav-link" data-toggle="tab" href="#preview" role="tab">미리보기</a>
@@ -4303,13 +4012,13 @@ and limitations under the License.
 			var data = await curs.execute("select id from edit_requests order by cast(id as integer) desc limit 1");
 			var id = 1;
 			if (data.length) id = Number(data[0].id) + 1;
-			const slug = newID();
+			const slug = newId.newID();
 			await curs.execute("insert into edit_requests (title, namespace, id, state, content, baserev, username, ismember, log, date, processor, processortype, lastupdate, slug) values (?, ?, ?, 'open', ?, ?, ?, ?, ?, ?, '', '', ?, ?)",
 				[doc.title, doc.namespace, id, req.body['text'] || '', baserev, ip_check(req), islogin(req) ? 'author' : 'ip', req.body['log'] || '', getTime(), getTime(), slug]);
 
 			delete req.session.captcha;
 
-			return res.redirect('/edit_request/' + (ver('4.16.0') ? slug : id));
+			return res.redirect('/edit_request/' + (versionHandler.ver('4.16.0') ? slug : id));
 		} while (0);
 
 		res.send(await render(req, doc + ' (편집 요청)', content, {
@@ -4323,7 +4032,7 @@ and limitations under the License.
 		const title = req.params[0];
 		const doc = processTitle(title);
 		if (['특수기능', '투표', '토론'].includes(doc.namespace) || !doc.title) return res.status(400).send(await showError(req, '문서 이름이 올바르지 않습니다.', 1));
-		if (ver('4.2.0')) {
+		if (versionHandler.ver('4.2.0')) {
 			await curs.execute("delete from acl where not expiration = '0' and cast(expiration as integer) < ?", [getTime()]);
 			const aclmsg = await getacl(req, doc.title, doc.namespace, 'acl');
 			const editable = !!aclmsg;
@@ -4349,7 +4058,7 @@ and limitations under the License.
 						<td>${edit ? `<button type="submit" class="btn btn-danger btn-sm">삭제</button></td>` : ''}</td>
 					</tr>
 				`;
-				} if (!data.length && ver('4.2.2')) {
+				} if (!data.length && versionHandler.ver('4.2.2')) {
 					ret += `
 					<td colspan="5" style="text-align: center;">(규칙이 존재하지 않습니다. ${isns ? '모두 거부됩니다.' : '이름공간 ACL이 적용됩니다.'})</td>
 				`;
@@ -4380,12 +4089,12 @@ and limitations under the License.
 
 				switch (mode) {
 					case 'insert': {
-						if (!['allow', 'deny'].concat(isNS || !ver('4.18.0') ? [] : ['gotons']).includes(action)) return res.status(400).send('');
+						if (!['allow', 'deny'].concat(isNS || !versionHandler.ver('4.18.0') ? [] : ['gotons']).includes(action)) return res.status(400).send('');
 						if (Number(expire) === NaN) return res.status(400).send('');
 						if (!condition) return res.status(400).send('');
 						const cond = condition.split(':');
 						if (cond.length != 2) return res.status(400).send('');
-						if (!['perm', 'ip', 'member'].concat(ver('4.5.9') ? ['geoip'] : []).concat(ver('4.18.0') ? ['aclgroup'] : []).includes(cond[0])) return res.status(400).send('');
+						if (!['perm', 'ip', 'member'].concat(versionHandler.ver('4.5.9') ? ['geoip'] : []).concat(versionHandler.ver('4.18.0') ? ['aclgroup'] : []).includes(cond[0])) return res.status(400).send('');
 						if (isNS) var data = await curs.execute("select id from acl where conditiontype = ? and condition = ? and type = ? and namespace = ? and ns = '1' order by cast(id as integer) desc limit 1", [cond[0], cond[1], type, doc.namespace]);
 						else var data = await curs.execute("select id from acl where conditiontype = ? and condition = ? and type = ? and title = ? and namespace = ? and ns = '0' order by cast(id as integer) desc limit 1", [cond[0], cond[1], type, doc.title, doc.namespace]);
 						if (data.length) return res.status(400).json({
@@ -4481,7 +4190,7 @@ and limitations under the License.
 					<div>
 				`;
 					for (var type of types) {
-						if (!isns && ver('4.16.0') && type == 'read') continue;
+						if (!isns && versionHandler.ver('4.16.0') && type == 'read') continue;
 						const edit = nseditable || (isns ? nseditable : editable);
 						content += `
 						<h4 class="wiki-heading">${acltype[type]}</h4>
@@ -4517,7 +4226,7 @@ and limitations under the License.
 							var aclpermopt = '';
 							for (var prm in aclperms) {
 								if (!aclperms[prm]) continue;
-								aclpermopt += `<option value=${prm}>${aclperms[prm]}${ver('4.18.0') ? '' : (exaclperms.includes(prm) ? ' [*]' : '')}</option>`;
+								aclpermopt += `<option value=${prm}>${aclperms[prm]}${versionHandler.ver('4.18.0') ? '' : (exaclperms.includes(prm) ? ' [*]' : '')}</option>`;
 							}
 
 							content += `
@@ -4529,8 +4238,8 @@ and limitations under the License.
 											<option value="perm">권한</option>
 											<option value="member">사용자</option>
 											<option value="ip">아이피</option>
-											${ver('4.5.9') ? `<option value="geoip">GeoIP</option>` : ''}
-											${ver('4.18.0') ? `<option value="aclgroup">ACL그룹</option>` : ''}
+											${versionHandler.ver('4.5.9') ? `<option value="geoip">GeoIP</option>` : ''}
+											${versionHandler.ver('4.18.0') ? `<option value="aclgroup">ACL그룹</option>` : ''}
 										</select>
 										<select class="seed-acl-add-condition-value-perm form-control" id="permTextWTC">
 											${aclpermopt}
@@ -4544,7 +4253,7 @@ and limitations under the License.
 										<select class="seed-acl-add-action form-control">
 											<option value="allow">허용</option>
 											<option value="deny">거부</option>
-											${isns || !ver('4.18.0') ? '' : `<option value="gotons" selected>이름공간ACL 실행</option>`}
+											${isns || !versionHandler.ver('4.18.0') ? '' : `<option value="gotons" selected>이름공간ACL 실행</option>`}
 										</select>
 									</div>
 								</div>
@@ -4558,7 +4267,7 @@ and limitations under the License.
 								</div>
 								<button type="submit" class="btn btn-primary seed-acl-add-btn">추가</button> 
 							</div>
-							${ver('4.18.0') ? '' : `<small>[*] 차단된 사용자는 포함되지 않습니다.</small>`}
+							${versionHandler.ver('4.18.0') ? '' : `<small>[*] 차단된 사용자는 포함되지 않습니다.</small>`}
 						`;
 						} content += `
 							</div>
@@ -4707,7 +4416,7 @@ and limitations under the License.
 					</td>
 					
 					<td>
-						${ip_pas(row.username, row.ismember)}${ver('4.20.0') && row.isapi ? ' <i>(API)</i>' : ''}
+						${ip_pas(row.username, row.ismember)}${versionHandler.ver('4.20.0') && row.isapi ? ' <i>(API)</i>' : ''}
 					</td>
 					
 					<td>
@@ -4749,7 +4458,7 @@ and limitations under the License.
 			// 2018년 더시드 업데이트로 최근 30일을 넘어선 기록을 최대 100개까지 볼 수 있었음
 			var tt = Number(getTime()) + 12345;
 			if (data.length) tt = Number(data[data.length - 1].time);
-			if (data.length < 100 && ver('4.8.0'))
+			if (data.length < 100 && versionHandler.ver('4.8.0'))
 				moredata = await curs.execute("select flags, title, namespace, rev, time, changes, log, iserq, erqnum, advance, ismember, username from history \
 					where cast(time as integer) < ? and ismember = ? " + (username.replace(/\s/g, '') ? "and lower(username) = ?" : "and (lower(username) like '%' || ?)") + " order by cast(time as integer) desc limit ?", [
 					tt, ismember, username.toLowerCase(), 100 - data.length
@@ -4768,14 +4477,14 @@ and limitations under the License.
 		<table class="table table-hover">
 			<colgroup>
 				<col>
-				${ver('4.13.0') ? '' : `<col style="width: 25%;">`}
+				${versionHandler.ver('4.13.0') ? '' : `<col style="width: 25%;">`}
 				<col style="width: 22%;">
 			</colgroup>
 			
 			<thead id>
 				<tr>
 					<th>문서</th>
-					${ver('4.13.0') ? '' : `<th>수정자</th>`}
+					${versionHandler.ver('4.13.0') ? '' : `<th>수정자</th>`}
 					<th>수정 시간</th>
 				</tr>
 			</thead>
@@ -4810,7 +4519,7 @@ and limitations under the License.
 				};">${row.changes}</span>)</span>
 					</td>
 					
-					${ver('4.13.0') ? '' : `
+					${versionHandler.ver('4.13.0') ? '' : `
 					<td>
 						${ip_pas(row.username, row.ismember)}
 					</td>
@@ -4896,8 +4605,8 @@ and limitations under the License.
 			<tr>
 				<td>
 					${trd.state
-					? `<a href="/edit_request/${ver('4.16.0') ? trd.slug : trd.id}">편집 요청 ${html.escape(minor >= 16 ? trd.slug : trd.id)}</a> (<a href="/discuss/${encodeURIComponent(title)}">${html.escape(title)}</a>)`
-					: `<a href="/thread/${ver('4.16.0') ? trd.slug : trd.tnum}">${html.escape(trd.topic)}</a> (<a href="/discuss/${encodeURIComponent(title)}">${html.escape(title)}</a>)`
+					? `<a href="/edit_request/${versionHandler.ver('4.16.0') ? trd.slug : trd.id}">편집 요청 ${html.escape(minor >= 16 ? trd.slug : trd.id)}</a> (<a href="/discuss/${encodeURIComponent(title)}">${html.escape(title)}</a>)`
+					: `<a href="/thread/${versionHandler.ver('4.16.0') ? trd.slug : trd.tnum}">${html.escape(trd.topic)}</a> (<a href="/discuss/${encodeURIComponent(title)}">${html.escape(title)}</a>)`
 				}
 				</td>
 				
@@ -4935,14 +4644,14 @@ and limitations under the License.
 		<table class="table table-hover">
 			<colgroup>
 				<col>
-				${ver('4.13.0') ? '' : `<col style="width: 25%;">`}
+				${versionHandler.ver('4.13.0') ? '' : `<col style="width: 25%;">`}
 				<col style="width: 22%;">
 			</colgroup>
 			
 			<thead id>
 				<tr>
 					<th>항목</th>
-					${ver('4.13.0') ? '' : `<th>수정자</th>`}
+					${versionHandler.ver('4.13.0') ? '' : `<th>수정자</th>`}
 					<th>수정 시간</th>
 				</tr>
 			</thead>
@@ -4960,7 +4669,7 @@ and limitations under the License.
 						<a href="/thread/${row.tnum}#${row.id}">#${row.id} ${html.escape(td['topic'])}</a> (<a href="/w/${encodeURIComponent(title)}">${html.escape(title)}</a>)
 					</td>
 					
-					${ver('4.13.0') ? '' : `
+					${versionHandler.ver('4.13.0') ? '' : `
 					<td>
 						${ip_pas(row.username, row.ismember)}
 					</td>
@@ -5022,7 +4731,7 @@ and limitations under the License.
 
 		for (var row of data) {
 			const erq = row.edit_request_id;
-			if (erq && ver('4.16.0')) {
+			if (erq && versionHandler.ver('4.16.0')) {
 				var dbd = await curs.execute("select slug from edit_requests where id = ?", [erq]);
 				if (dbd.length) erq = dbd[0].slug;
 			}
@@ -5116,7 +4825,7 @@ and limitations under the License.
 			trdlst = await curs.execute("select id, slug from edit_requests where state = 'closed' and not deleted = '1' and title = ? and namespace = ? order by cast(date as integer) desc", [doc.title, doc.namespace]);
 
 			for (var trd of trdlst) {
-				content += `<li><a href="/edit_request/${ver('4.16.0') ? trd.slug : trd.id}">편집 요청 ${ver('4.16.0') ? trd.slug : trd.id}</a></li>`;
+				content += `<li><a href="/edit_request/${versionHandler.ver('4.16.0') ? trd.slug : trd.id}">편집 요청 ${versionHandler.ver('4.16.0') ? trd.slug : trd.id}</a></li>`;
 			}
 
 			content += '</ul>';
@@ -5152,7 +4861,7 @@ and limitations under the License.
 			var deleteThread = !!getperm('delete_thread', ip_check(req));
 			trdlst = await curs.execute("select id, slug from edit_requests where state = 'open' and not deleted = '1' and title = ? and namespace = ? order by cast(date as integer) desc", [doc.title, doc.namespace]);
 			for (var item of trdlst) {
-				content += `<li><a href="/edit_request/${ver('4.16.0') ? item.slug : item.id}">편집 요청 ${ver('4.16.0') ? item.slug : item.id}</a></li>`;
+				content += `<li><a href="/edit_request/${versionHandler.ver('4.16.0') ? item.slug : item.id}">편집 요청 ${versionHandler.ver('4.16.0') ? item.slug : item.id}</a></li>`;
 			}
 
 			content += `
@@ -5338,7 +5047,7 @@ and limitations under the License.
 			var dd = await curs.execute("select tnum from threads where tnum = ?", [tnum]);
 			if (!dd.length) break;
 		} while (1);
-		const newid = newID();
+		const newid = newId.newID();
 
 		await curs.execute("insert into threads (title, namespace, topic, status, time, tnum, slug) values (?, ?, ?, ?, ?, ?, ?)",
 			[doc.title, doc.namespace, req.body['topic'], 'normal', getTime(), tnum, newid]);
@@ -5358,14 +5067,14 @@ and limitations under the License.
 		next();
 	});
 
-	/* if(ver('4.16.0')) wiki.get(/^\/thread\/([a-zA-Z0-9]{18,24})$/, async(req, res, next) => {
+	/* if(versionHandler.ver('4.16.0')) wiki.get(/^\/thread\/([a-zA-Z0-9]{18,24})$/, async(req, res, next) => {
 		const tnum = req.params[0];
 		var data = await curs.execute("select slug, tnum from threads where tnum = ?", [tnum]);
 		if(data.length && tnum != data[0].slug) return res.redirect('/thread/' + data[0].slug);
 		next();
 	}); */
 
-	wiki.get(ver('4.16.0') ? /^\/thread\/([a-zA-Z0-9]+)$/ : /^\/thread\/([a-zA-Z0-9]{18,24})$/, async function viewThread(req, res) {
+	wiki.get(versionHandler.ver('4.16.0') ? /^\/thread\/([a-zA-Z0-9]+)$/ : /^\/thread\/([a-zA-Z0-9]{18,24})$/, async function viewThread(req, res) {
 		var tnum = req.params[0];
 		var slug = tnum;
 		var data = await curs.execute("select tnum from threads where slug = ?", [tnum]);
@@ -5448,7 +5157,7 @@ and limitations under the License.
 		`;
 		}
 
-		if (getperm('update_thread_document', ip_check(req)) && ver('4.4.3')) {
+		if (getperm('update_thread_document', ip_check(req)) && versionHandler.ver('4.4.3')) {
 			content += `
         	<form method=post id=thread-document-form>
         		[ADMIN] 쓰레드 이동
@@ -5458,7 +5167,7 @@ and limitations under the License.
 		`;
 		}
 
-		if (getperm('update_thread_topic', ip_check(req)) && ver('4.4.3')) {
+		if (getperm('update_thread_topic', ip_check(req)) && versionHandler.ver('4.4.3')) {
 			content += `
         	<form method=post id=thread-topic-form>
         		[ADMIN] 쓰레드 주제 변경
@@ -5470,7 +5179,7 @@ and limitations under the License.
 
 		content += `
 		<form id=new-thread-form method=post>
-			${ver('4.20.0') ? `
+			${versionHandler.ver('4.20.0') ? `
 				<ul class="nav nav-tabs" role="tablist" style="height: 38px;">
 					<li class="nav-item">
 						<a style="width: 128px; text-align: center;" id=textInputLink class="nav-link active" data-toggle="tab" href="#edit" role="tab">${'RAW 편집'}</a>
@@ -5625,7 +5334,7 @@ and limitations under the License.
 		var data = await curs.execute("select isadmin, type, id, content, username, time, hidden, hider, status, ismember from res where tnum = ? and (cast(id as integer) = 1 or (cast(id as integer) >= ? and cast(id as integer) < ?)) order by cast(id as integer) asc", [tnum, Number(tid), Number(tid) + 30]);
 		for (var rs of data) {
 			var menu = '';
-			if (ver('4.19.0')) {
+			if (versionHandler.ver('4.19.0')) {
 				var _hidebtn = '';
 				if (getperm('hide_thread_comment', ip_check(req))) {
 					_hidebtn = `<a style="width: 100%;" class="btn btn-danger btn-sm" href="/admin/thread/${tnum}/${rs.id}/${rs.hidden == '1' ? 'show' : 'hide'}">[ADMIN] 숨기기${rs.hidden == '1' ? ' 해제' : ''}</a>`;
@@ -5651,7 +5360,7 @@ and limitations under the License.
 			var rescontent = rs.status == 1
 				? (
 					rs.type == 'status'
-						? (ver('4.4.3') ? ('스레드 상태를 <strong>' + rs.content + '</strong>로 변경') : ('토픽 상태를 ' + rs.content + '로 변경'))
+						? (versionHandler.ver('4.4.3') ? ('스레드 상태를 <strong>' + rs.content + '</strong>로 변경') : ('토픽 상태를 ' + rs.content + '로 변경'))
 						: (
 							rs.type == 'document'
 								? '스레드를 <strong>' + rs.content + '</strong> 문서로 이동'
@@ -5663,7 +5372,7 @@ and limitations under the License.
 				var rc = rescontent;
 				rescontent = '[' + rs.hider + '에 의해 숨겨진 글입니다.]';
 				if (getperm('hide_thread_comment', ip_check(req))) {
-					if (ver('4.13.0')) {
+					if (versionHandler.ver('4.13.0')) {
 						rescontent += '<a class="btn btn-danger btn-sm" onclick="$(this).parent().attr(\'class\', \'r-body\'); $(this).parent().html($(this).parent().children(\'.hidden-content\').html()); return false;">[ADMIN] SHOW</a><div class=hidden-content style="display:none">' + rc + '</div>';
 					} else {
 						rescontent += '<div class=text-line-break style="margin: 25px 0px 0px -10px; display:block"><a class=text onclick="$(this).parent().parent().children(\'.hidden-content\').show(); $(this).parent().css(\'margin\', \'15px 0 15px -10px\'); $(this).hide(); return false;" style="display: block; color: #fff;">[ADMIN] Show hidden content</a><div class=line></div></div><div class=hidden-content style="display:none">' + rc + '</div>';
@@ -5677,7 +5386,7 @@ and limitations under the License.
 					<div class="r-head${rs.username == fstusr ? ' first-author' : ''}">
 						<span class=num>
 							<a id="${rs.id}">#${rs.id}</a>&nbsp;
-						</span> ${ip_pas(rs.username, rs.ismember, 1).replace('<a ', rs.isadmin == '1' ? '<a style="font-weight: bold;" ' : '<a ')}${rs['ismember'] == 'author' && await userblocked(rs.username) ? ` <small>(${ver('4.11.3') ? '차단됨' : '차단된 사용자'})</small>` : ''}${rs.ismember == 'ip' && await ipblocked(rs.username) ? ` <small>(${ver('4.11.3') ? '차단됨' : '차단된 아이피'})</small>` : ''}
+						</span> ${ip_pas(rs.username, rs.ismember, 1).replace('<a ', rs.isadmin == '1' ? '<a style="font-weight: bold;" ' : '<a ')}${rs['ismember'] == 'author' && await userblocked(rs.username) ? ` <small>(${versionHandler.ver('4.11.3') ? '차단됨' : '차단된 사용자'})</small>` : ''}${rs.ismember == 'ip' && await ipblocked(rs.username) ? ` <small>(${versionHandler.ver('4.11.3') ? '차단됨' : '차단된 아이피'})</small>` : ''}
 						<span class=pull-right>
 							${generateTime(toDate(rs.time), timeFormat)}
 							${menu}
@@ -5688,7 +5397,7 @@ and limitations under the License.
 						${rescontent}
 					</div>
 		`;
-			if (getperm('hide_thread_comment', ip_check(req)) && !ver('4.19.0')) {
+			if (getperm('hide_thread_comment', ip_check(req)) && !versionHandler.ver('4.19.0')) {
 				content += `
 				<div class="combo admin-menu">
 					<a class="btn btn-danger btn-sm" href="/admin/thread/${tnum}/${rs.id}/${rs.hidden == '1' ? 'show' : 'hide'}">[ADMIN] 숨기기${rs.hidden == '1' ? ' 해제' : ''}</a>
@@ -5901,7 +5610,7 @@ and limitations under the License.
 		var error = null;
 		if (req.method == 'POST') do {
 			if (doc.namespace == '사용자')
-				if ((ver('4.11.0') && !doc.title.includes('/')) || !ver('4.11.0')) {
+				if ((versionHandler.ver('4.11.0') && !doc.title.includes('/')) || !versionHandler.ver('4.11.0')) {
 					content = (error = err('alert', 'disable_user_document')) + content;
 					break;
 				}
@@ -5957,7 +5666,7 @@ and limitations under the License.
 				<input style="width: 600px;" name=log type=text id=logInput />
 			</div>
 			
-			${ver('4.2.4') ? `
+			${versionHandler.ver('4.2.4') ? `
 			<div>
 				<label>문서를 서로 맞바꾸기 : </label><br />
 				<input type=checkbox name=mode value=swap />
@@ -5975,7 +5684,7 @@ and limitations under the License.
 
 		if (req.method == 'POST') do {
 			if (doc.namespace == '사용자')
-				if ((ver('4.11.0') && !doc.title.includes('/')) || !ver('4.11.0')) {
+				if ((versionHandler.ver('4.11.0') && !doc.title.includes('/')) || !versionHandler.ver('4.11.0')) {
 					content = (error = err('alert', 'disable_user_document')) + content;
 					break;
 				}
@@ -6034,7 +5743,7 @@ and limitations under the License.
 		}, '', error, 'move'));
 	});
 
-	if (!ver('4.18.0')) wiki.all(/^\/admin\/suspend_account$/, async (req, res) => {
+	if (!versionHandler.ver('4.18.0')) wiki.all(/^\/admin\/suspend_account$/, async (req, res) => {
 		if (!['POST', 'GET'].includes(req.method)) return next();
 		if (!hasperm(req, 'suspend_account')) return res.status(403).send(await showError(req, 'permission'));
 
@@ -6288,7 +5997,7 @@ and limitations under the License.
 		return res.send(await render(req, username + ' 로그인 내역', content, {}, _, _, 'login_history'));
 	});
 
-	if (!ver('4.18.0')) wiki.post(/^\/admin\/ipacl\/remove$/, async (req, res) => {
+	if (!versionHandler.ver('4.18.0')) wiki.post(/^\/admin\/ipacl\/remove$/, async (req, res) => {
 		if (!hasperm(req, 'ipacl')) return res.status(403).send(await showError(req, 'permission'));
 		if (!req.body['ip']) return res.status(400).send(await showError(req, { code: 'validator_required', tag: 'ip' }));
 		var dbdata = await curs.execute("select cidr from ipacl where cidr = ?", [req.body['ip']]);
@@ -6307,7 +6016,7 @@ and limitations under the License.
 		return res.redirect('/admin/ipacl');
 	});
 
-	if (!ver('4.18.0')) wiki.all(/^\/admin\/ipacl$/, async (req, res, next) => {
+	if (!versionHandler.ver('4.18.0')) wiki.all(/^\/admin\/ipacl$/, async (req, res, next) => {
 		if (!['POST', 'GET'].includes(req.method)) return next();
 		if (!hasperm(req, 'ipacl')) return res.status(403).send(await showError(req, 'permission'));
 		const { from, until } = req.query;
@@ -6470,7 +6179,7 @@ and limitations under the License.
 		}, '', error, 'ipacl'));
 	});
 
-	if (ver('4.18.0') && hostconfig.namuwiki_exclusive)
+	if (versionHandler.ver('4.18.0') && hostconfig.namuwiki_exclusive)
 		wiki.get(/^\/self_unblock$/, async (req, res) => {
 			const id = req.query['id'];
 			var dbdata = await curs.execute("select type, username, aclgroup from aclgroup where id = ?", [id || '-1']);
@@ -6502,7 +6211,7 @@ and limitations under the License.
 			return res.redirect('/edit/' + encodeURIComponent(req.query['document']));
 		});
 
-	if (ver('4.18.0')) wiki.all(/^\/aclgroup\/create$/, async (req, res, next) => {
+	if (versionHandler.ver('4.18.0')) wiki.all(/^\/aclgroup\/create$/, async (req, res, next) => {
 		if (!['POST', 'GET'].includes(req.method)) return next();
 		if (!hasperm(req, 'aclgroup')) return res.send(await showError(req, 'permission'));
 
@@ -6549,7 +6258,7 @@ and limitations under the License.
 		res.send(await render(req, 'ACL그룹 생성', content, {}, '', error, _));
 	});
 
-	if (ver('4.18.0')) wiki.post(/^\/aclgroup\/delete$/, async (req, res, next) => {
+	if (versionHandler.ver('4.18.0')) wiki.post(/^\/aclgroup\/delete$/, async (req, res, next) => {
 		if (!hasperm(req, 'aclgroup')) return res.send(await showError(req, 'permission'));
 		const { group } = req.body;
 		if (!group) return res.redirect('/aclgroup');  // 귀찮음
@@ -6557,7 +6266,7 @@ and limitations under the License.
 		res.redirect('/aclgroup');
 	});
 
-	if (ver('4.18.0')) wiki.post(/^\/aclgroup\/remove$/, async (req, res) => {
+	if (versionHandler.ver('4.18.0')) wiki.post(/^\/aclgroup\/remove$/, async (req, res) => {
 		if (!hasperm(req, 'aclgroup')) return res.send(await showError(req, 'permission'));
 		if (!req.body['id']) return res.status(400).send(await showError(req, { code: 'validator_required', tag: 'id' }));
 		var dbdata = await curs.execute("select username, aclgroup from aclgroup where id = ?", [req.body['id']]);
@@ -6579,7 +6288,7 @@ and limitations under the License.
 		return res.redirect('/aclgroup?group=' + encodeURIComponent(dbdata[0].aclgroup));
 	});
 
-	if (ver('4.18.0')) wiki.all(/^\/aclgroup$/, async (req, res) => {
+	if (versionHandler.ver('4.18.0')) wiki.all(/^\/aclgroup$/, async (req, res) => {
 		if (!['POST', 'GET'].includes(req.method)) return next();
 
 		var data = await curs.execute("select name from aclgroup_groups");
@@ -7047,7 +6756,7 @@ and limitations under the License.
 		}
 
 		for (var item of data) {
-			if (['aclgroup_add', 'aclgroup_remove'].includes(item.type) && !ver('4.18.0')) continue;
+			if (['aclgroup_add', 'aclgroup_remove'].includes(item.type) && !versionHandler.ver('4.18.0')) continue;
 
 			content += `
 			<li>${generateTime(toDate(item.date), timeFormat)} ${ip_pas(item.executer, item.ismember)} 사용자가 ${item.target} <i>(${item.type == 'aclgroup_add'
@@ -7076,7 +6785,7 @@ and limitations under the License.
 																			: ''
 																	)))))))
 				})</i> ${item.type == 'aclgroup_add' || item.type == 'aclgroup_remove' ? `#${item.id}` : ''} ${item.type == 'aclgroup_add' || item.type == 'ipacl_add' || (item.type == 'suspend_account' && item.duration != '-1')
-					? (major == 4 && ver('4.0.20') ? `(${item.duration == '0' ? '영구적으로' : `${parses(item.duration)} 동안`})` : `${item.duration} 동안`)
+					? (major == 4 && versionHandler.ver('4.0.20') ? `(${item.duration == '0' ? '영구적으로' : `${parses(item.duration)} 동안`})` : `${item.duration} 동안`)
 					: ''
 				} ${item.type == 'aclgroup_add' || item.type == 'aclgroup_remove' || item.type == 'ipacl_add' || item.type == 'suspend_account' || item.type == 'grant'
 					? `(<span style="color: gray;">${item.note}</span>)`
@@ -7257,7 +6966,7 @@ and limitations under the License.
 		return res.send(await render(req, '사용자 이름 변경', content, {}, _, error, 'delete_account'));
 	});
 
-	if (ver('4.18.6')) {
+	if (versionHandler.ver('4.18.6')) {
 		wiki.all(/^\/member\/mypage$/, async (req, res, next) => {
 			if (!['GET', 'POST'].includes(req.method)) return next();
 			if (!islogin(req)) return res.redirect('/member/login?redirect=%2Fmember%2Fmypage');
@@ -7684,7 +7393,7 @@ and limitations under the License.
 			var data = await curs.execute("select username, password from users where lower(username) = ? and password = ? COLLATE NOCASE", [id.toLowerCase(), sha3(pw)]);
 			var invalidpw = !invalidusername && (!data.length || !pw);
 			if (invalidpw) break;
-			var blocked = ver('4.1.0') ? 0 : await userblocked(id);
+			var blocked = versionHandler.ver('4.1.0') ? 0 : await userblocked(id);
 			if (blocked) break;
 		} while (0);
 
@@ -7977,7 +7686,7 @@ and limitations under the License.
 	});
 
 	wiki.get(/^\/RandomPage$/, async function randomPage(req, res) {
-		const usens = ver('4.5.5');
+		const usens = versionHandler.ver('4.5.5');
 
 		const nslist = fetchNamespaces();
 		var ns = usens ? req.query['namespace'] : null;
@@ -8087,7 +7796,7 @@ and limitations under the License.
 		<ul class=wiki-list>
 	`;
 		for (let item of ret) {
-			content += '<li><a href="/w/' + encodeURIComponent(totitle(item, ns)) + '">' + html.escape(totitle(item, ns) + '') + '</a>  <a href="/' + (ver('4.14.0') ? 'backlink' : 'xref') + '/' + encodeURIComponent(totitle(item, ns)) + '">[역링크]</a></li>';
+			content += '<li><a href="/w/' + encodeURIComponent(totitle(item, ns)) + '">' + html.escape(totitle(item, ns) + '') + '</a>  <a href="/' + (versionHandler.ver('4.14.0') ? 'backlink' : 'xref') + '/' + encodeURIComponent(totitle(item, ns)) + '">[역링크]</a></li>';
 		}
 		content += '</ul>' + navbtns;
 
@@ -8546,11 +8255,11 @@ and limitations under the License.
 					await curs.execute("alter table edit_requests\nADD slug text;");
 					var dd = await curs.execute("select tnum from threads");
 					for (let item of dd) {
-						await curs.execute("update threads set slug = ? where tnum = ?", [newID(), item.tnum]);
+						await curs.execute("update threads set slug = ? where tnum = ?", [newId.newID(), item.tnum]);
 					}
 					var dd = await curs.execute("select id from edit_requests");
 					for (let item of dd) {
-						await curs.execute("update edit_requests set slug = ? where id = ?", [newID(), item.id]);
+						await curs.execute("update edit_requests set slug = ? where id = ?", [newId.newID(), item.id]);
 					}
 				} catch (e) { }
 			} case 11: {
@@ -8559,7 +8268,7 @@ and limitations under the License.
 					await curs.execute("alter table res\nADD slug text;");
 					var dd = await curs.execute("select tnum from threads");
 					for (let item of dd) {
-						await curs.execute("update res set slug = ? where tnum = ?", [newID(), item.tnum]);
+						await curs.execute("update res set slug = ? where tnum = ?", [newId.newID(), item.tnum]);
 					}
 				} catch (e) { }
 			} case 12: {
@@ -8577,7 +8286,7 @@ and limitations under the License.
 				try {
 					var dd = await curs.execute("select id from edit_requests where slug is null or slug = ''");
 					for (var item of dd) {
-						await curs.execute("update edit_requests set slug = ? where id = ?", [newID(), item.id]);
+						await curs.execute("update edit_requests set slug = ? where id = ?", [newId.newID(), item.id]);
 					}
 				} catch (e) { }
 			} case 15: {
