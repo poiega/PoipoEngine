@@ -80,7 +80,7 @@ var perms = [
 	'delete_thread', 'admin', 'editable_other_user_document', 'suspend_account', 'ipacl', 
 	'update_thread_status', 'acl', 'nsacl', 'hide_thread_comment', 'grant', 'no_force_recaptcha', 
 	'disable_two_factor_login', 'login_history', 'update_thread_document', 'update_thread_topic', 
-	'aclgroup', 'api_access', 
+	'aclgroup', 'api_access', 'developer', 'hideip',
 ];
 var disable_autoperms = ['disable_two_factor_login'];
 
@@ -531,14 +531,14 @@ try {
 	if(!(minor > 0 || (minor == 0 && revision >= 20))) perms = perms.concat(['developer', 'tribune', 'arbiter']);
 	if(hostconfig.debug) perms.push('debug');
 } catch(e) { (async function() {
-	print('병아리 - the seed 모방 엔진에 오신것을 환영합니다.\n');
+	print('PoipoEngine - the seed 모방 엔진에 오신걸 환영합니다!\n');
 	
 	if(typeof hostconfig != 'object')
 	
 	// 호스팅 설정
 	hostconfig = {
 		host: input('호스트 주소: '),
-		port: input('포트 번호: '),
+		port: input('포트: '),
 		skin: input('기본 스킨 이름: '),
 		search_host: '127.5.5.5',
 		search_port: '25005',
@@ -1806,7 +1806,7 @@ async function render(req, title = '', content = '', varlist = {}, subtitle = ''
 				<meta name=msapplication-starturl content="/w/` + encodeURIComponent(config.getString('wiki.front_page', 'FrontPage')) + `" />
 				<link rel=search type="application/opensearchdescription+xml" title="` + config.getString('wiki.site_name', '더 시드') + `" href="/opensearch.xml" />
 				<meta name=viewport content="width=device-width, initial-scale=1, maximum-scale=1" />
-			${hostconfig.use_external_css ? `
+			${hostconfig.  ? `
 				<link rel=stylesheet href="https://theseed.io/css/diffview.css" />
 				<link rel=stylesheet href="https://theseed.io/css/katex.min.css" />
 				<link rel=stylesheet href="https://theseed.io/css/wiki.css" />
@@ -1858,7 +1858,6 @@ async function render(req, title = '', content = '', varlist = {}, subtitle = ''
 		});
 	});
 }
-
 // ACL 종류
 const acltype = {
 	read: '읽기',
@@ -2592,10 +2591,53 @@ function expireopt(req) {
 
 wiki.get(/^\/License$/, async(req, res) => {
 	var licepage = `
-		<p>imitated-seed</p>
-		<p>(the seed v${major}.${minor}.${revision})</p>
+		<h2>PoipoEngine</h2>
+		<p>v4.1.0</p>
+		<p>Copyright <a href="https://github.com/poiega">poiega</a> all rights reserved.</p>
+		<p>2020.06.20 - 2022.09.17 Commits Copyright <a href="https://github.com/gdl-blue">gdl-blue</a>. Do not distribute!</p>
+			
+			<h3>Contributors</h3>
+			<ul class=wiki-list>
+			<li>poiega@poie.ga (backend & frontend)</li>
+		        <li><a href="https://github.com/gdl-blue">gdl-blue</a></li>
+			</ul>
+			<h3>Github</h3>
+			<ul cless=wiki-list>
+			<a href="https://github.com/poiega/PoipoEngine">Github</a>
+			<h3>Open source license</h3>
+			<ul class=wiki-list>
+				<li>
+					<a href="https://github.com/Khan/KaTeX">KaTex</a><br>
+					Author : <a href="https://github.com/Khan">Khan Academy</a><br />
+					KaTeX is licensed under the <a rel="license" href="https://github.com/Khan/KaTeX/blob/master/LICENSE.txt">MIT license</a>.
+				</li>
+				<li>
+					<a href="https://paularmstrong.github.io/swig/">Swig</a><br />
+					Author : <a href="https://github.com/paularmstrong">Paul Armstrong</a><br />
+					Swig is licensed under the <a rel="license" href="https://github.com/paularmstrong/swig/blob/master/LICENSE">MIT license</a>.
+				</li>
 	`;
-	
+        if(hostconfig.replicate_imitated_seed_license) {
+        licepage = '';
+		if(ver('4.11.1')) {
+			licepage += `<h2>imitated-seed</h2>>`;
+		} else {
+			licepage += `<h2>imitated-seed</h2>>`;
+		}
+		licepage += ` 
+		      `<h2>imitated-seed</h2>
+			<p>ver.${lastupddate}${ispatched ? `(Patched by ${patcher} at ${patchdate})` : ''}<br>
+				(the seed v${major}.${minor}.${revision})</p>` : `<h2>imitated-seed ver.${lastupddate}</h2>
+			<p>(Patched by ${patcher} at ${patchdate})<br>
+				(the seed v${major}.${minor}.${revision})`}
+			<p>Copyright <a href="https://github.com/gdl-blue">gdl-blue</a>. Do not distribute!</p>
+			<h2>Contributors</h2>
+			<ul class=wiki-list>
+				<li><a href="https://github.com/gdl-blue">github@gdl-blue</a> (source code)</li>
+				<li><a href="https://github.com/JeonDohyeon">github@JeonDohyeon</a> (https://github.com/JeonDohyeon/imitated-seed/blob/flight/server.js 2699 - 2791)</li>
+			</ul>`;
+	}
+
 	if(hostconfig.replicate_theseed_license) {
 		licepage = '';
 		if(ver('4.11.1')) {
