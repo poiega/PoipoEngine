@@ -1,4 +1,4 @@
-/* Copyright (c) 2022 - JeonDohyeon */
+# Copyright (c) 2022 - JeonDohyeon 
 # define
 $file = "js/theseed.js", "js/jquery-2.1.4.min.js", "js/jquery-1.11.3.min.js", "js/intersection-observer.js", "js/dateformatter.js", "css/wiki.css", "css/katex.min.css", "css/diffview.css"
 
