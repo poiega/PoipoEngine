@@ -1,4 +1,4 @@
-/* 병아리 엔진 - the seed 모방 프로젝트 */
+/* PoipoEngine - 병아리 엔진 개조 프로젝트 */
 
 const http = require('http');
 const https = require('https');
@@ -31,7 +31,9 @@ const randint = (s, e) => floorof(Math.random() * (e + 1 - s) + s);
 // 더 시드 모방 버전 (나중에 config.json에서 불러옴)
 var major = 4, minor = 12, revision = 0;
 var _ready = 0;
-
+// PoipoEngine 버전
+var ion = 4, ion2 = 1, ion3 = 0; // 상수(const)로 대체 가능한지 실험해야함...
+// 서버, 캐시
 const wiki = express();  // 서버
 const conn = new sqlite3.Database('./wikidata.db', () => 0);  // 데이타베이스
 const upload = multer();  // 파일 올리기 모듈
@@ -73,7 +75,7 @@ wiki.use(session({
 wiki.use(cookieParser());
 
 // 업데이트 수준
-const updatecode = '16';
+const updatecode = '1';
 
 // 사용자 권한
 var perms = [
