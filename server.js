@@ -2688,7 +2688,7 @@ try {
 				<li><a href="https://github.com/JeonDohyeon">github@JeonDohyeon</a> (server flight & skin modifications)</li>
 				<li><a href="https://github.com/aploga">github@aploga</a> (additional modifications)</li>`
 		if (ispatched) {
-			for (var _i = 0; i < patcher.length; i++) licefull += `
+			for (var _i = 0; _i < patcher.length; _i++) licefull += `
 				<li>${patcher[i]} (additional patches)</li>`
 		}
 
