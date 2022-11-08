@@ -1,7 +1,7 @@
 # Imitated-seed
 더시드 엔진 (구 프론트엔드 기준) 모방 프로젝트.
 
-테스트 서버 - https://jdh5968.pe.kr (`flight` 브랜치)
+테스트 서버 - https://wiki.jdh5968.pe.kr (`flight` 브랜치)
 
 나무픽스와 거의 호환된다.
 
