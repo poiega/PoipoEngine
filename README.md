@@ -1,17 +1,16 @@
-더시드 엔진 (구 프론트엔드 기준) 모방 프로젝트.  
-< "엔진 내부 UI는 상관없음." ( https://feedback.theseed.io/posts/280 ) >  
-테스트 서버 - https://go2021.glitch.me (지금 접속 안 된다.)
+# Imitated-seed
+더시드 엔진 (구 프론트엔드 기준) 모방 프로젝트.
+
+테스트 서버 - https://jdh5968.pe.kr (`flight` 브랜치)
 
 나무픽스와 거의 호환된다.
 
-Pull Request 시 서버 코드에는 Node.js 13 이상, 프론트엔드 자바스크립트에는 ES6 이상 문법을 사용하지 말 것.
-
 ## 경고
-<b style="size: 3em;">이 레포는 실사를 위해 생성한 포크다. PR로 깽판 치면 잠궈버릴 거니 유의 바람.</b>
+**이 레포는 실사를 위해 생성한 포크다. PR로 깽판 치면 잠궈버릴 거니 유의 바람.**
 
-원본 보고 싶으면 [마스터 브랜치](https://github.com/JeonDohyeon/imitated-seed/blob/master)나 [진짜 원본](https://github.com/gdl-blue/imitated-seed-2)으로.
+원본 보고 싶으면 [여기](https://github.com/gdl-blue/imitated-seed-2)로.
 
-마개조 일지는 [위키](http://wiki.jdh5968.pe.kr:8800/w/개발일지:개발일지)에도 씨부려 놨지만, 간단하게 [여기](https://github.com/JeonDohyeon/imitated-seed/wiki/패치-일람)에서도 볼 수 있다.
+마개조 일지는 [위키](https://wiki.jdh5968.pe.kr/w/개발일지:개발일지)에도 씨부려 놨지만, 간단하게 [여기](https://github.com/JeonDohyeon/imitated-seed/wiki/패치-일람)에서도 볼 수 있다.
 
 ## 기초 사용 방법
 - **만약 config.json에서 `use_external_js`과 `use_external_css`이 true이면 아래 단계는 생략해도 된다.** 스킨만 추가하면 된다.
@@ -26,24 +25,17 @@ Pull Request 시 서버 코드에는 Node.js 13 이상, 프론트엔드 자바�
 ### 잡소리
 - css, js 관련
   - ps1 파일로 스크립트화했다. 반드시 css 폴더 만들고 실행할 것. 지가 알아서 다 다운받아준다.
+  - 스킨은 직접 다운받아라. 제발.
+  - 이 ps1 파일과 대응되는 bat 파일은 없다. wget 쓰는데 있을 리가. 대신에 sh 파일 만들었으면 issue에 올려주면 추가해보겠다.
 - 스킨
-  - 사실, skins 디렉토리 안에 원하는 스킨 이름 디렉토리를 만들어서 거기다 포크를 때려도 된다.
-    - 누가 말리진 않는다. 다만 깃으로 관리한다면 그 파일까지 다 올라온다.
-  - 아니면, skins 아래에 `git submodule add <url> [relative-dir]` 써도 된다.
-    - 지금은 저걸로 적용해놨다. 구현체에 따라서 파일이 다 올라오는 경우도 있고 자동으로 submodule화되는 경우가 있어서 submodule로 통합.
+  - 사실, skins 디렉토리 안에 원하는 스킨 이름 디렉토리를 만들어서 거기다 포크를 때려도 된다.  
+  아니면, skins 아래에 `git submodule add <url> [relative-dir]` 써도 된다.
+    - 구현체에 따라서 파일이 다 올라오는 경우도 있고 자동으로 submodule화되는 경우가 있어서 현재는 submodule로 통합.
   - 난 지금 자체 포크 개조판 쓴다. 자세한 건 내 레포 목록 확인.
-- `npm i`
-  - 사실 얜 `npm install`이다. 근데 짧게 쓰려고 5자로 줄인 거.
-    - 개발자 미국놈 아니랄까봐 install 대신 i 쓴다.
-  - 사실 얜 `node server`를 위해 필요한 파일을 다운받는 절차다.
-  - 랄까 뭔 이상한 문구 겁나 나올까봐 걱정된다면 Node.js 12를 써라.
-    - 그 문구를 버틸 자신이 있다면 최신 LTS 써도 된다. 일단 나부터 문제 크게 없이 쓰고 있다.
 
 ## 추가 도구
 - undelete-thread.js: 삭제된 토론 복구
 - namuwiki-importer.js: 나무위키 데이타베이스 덤프 가져오기
-
-난 여기 둘 중에 스레드 복구 툴만 쓸 거 같긴 하다. 삭제하면 실행 안 될 게 뻔하니 그냥 냅두는 거.
 
 ## config.json
 - config.json 수정으로 숨겨진 설정을 제어할 수 있다.
@@ -67,10 +59,26 @@ Pull Request 시 서버 코드에는 Node.js 13 이상, 프론트엔드 자바�
   - `namuwiki_exclusive`: (기본값 false) 나무위키 전용 기능(경고 ACL 그룹, 문서 이전 판 경고 등)을 활성화한다.
   - `enable_captcha`: (기본값 false) 보안문자를 쓰게 한다.
   - `block_ip`: (기본값 []) 접속을 차단할 IP를 지정한다. CIDR는 지원하지 않는다.
-  - `get_long_license`: (기본값 false) 라이선스 페이지를 더시드 엔진의 것을 기반으로 imitated-seed에 맞춰 변형한 "긴 라이센스"로 띄운다.
+  - [추가] `get_long_license`: (기본값 false) 라이선스 페이지를 더시드 엔진의 것을 기반으로 imitated-seed에 맞춰 변형한 "긴 라이센스"로 띄운다.
 
 ### 잡소리
-- 검색 서버 설정은 안 건드리는 게 정신건강에 이롭다.
+- 검색 서버 설정은 안 건드리는 게 정신건강에 이롭다.  
+근데 켜두는 게 좋다.
+
+## misc.json
+- config.json이 아닌 또다른 설정 파일로, 내부 설정을 제어하지만 config와 달리 코드와는 크게 관련 없는 부분을 수정한다.  
+얘만의 특징으로, 처음 시작 시 기본값을 모두 적어준다.
+  - `wiki_ver`: (기본값 `20220917`) 체크아웃 중인 master 브랜치의 최종 수정일을 의도했다.  
+  맘대로 버전 지정 해도 상관없다. 그러라고 만든 필드다.  
+  `config.get_long_license`가 true여야 표시된다.
+  - `edited`
+    + `is_edited`: (기본값: false) license 표시 중 수정된 판인지를 표시하기 위해 넣어두었다.  
+    `config.get_long_license`가 true여야 작동한다. 또, `edited.date`가 ''(빈 값)이면 false로 조정된다.
+      * false로 조정되더라도 파일에선 true로 표시될 수 있다.
+    + `author`: (기본값: []) 이 수정판을 누가누가 수정했는지를 표시한다.  
+    `config.get_long_license`와 `edited.is_edited`가 모두 true고, `edited.date`가 ''(빈 값)이 아니어야 표시된다.
+    + `date`: (기본값: '') 이 수정판의 최종 수정일을 표시한다.  
+    `config.get_long_license`와 `edited.is_edited`가 모두 true여야 표시된다.
 
 ## 라이선스
 자유롭게 쓰기 바란다. (렌더러는 개조 시 소스 코드 공개해주었으면 좋겠음. 그리고 포크판을 특허출원 하지 마라.)
@@ -82,11 +90,6 @@ Pull Request 시 서버 코드에는 Node.js 13 이상, 프론트엔드 자바�
 - 엔진에서 백엔드와 프론트엔드를 모두 처리한다. (오픈나무에서 영향 받음)
 - 밀리초 유닉스 시간을 사용한다.
 - /notify/thread 라우트가 제대로 되어있지 않다.
-
-## 플라이트 서버
-https://wiki.jdh5968.pe.kr 에서 돌리고 있다. 나무위키나 알파위키, 더시드위키처럼 탈퇴는 막혀있으니 양해 탁부.
-
-서버의 Node 버전은 Node.js 12이다.
 
 ## 알려진 문제점
 issues로.
