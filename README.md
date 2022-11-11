@@ -7,7 +7,7 @@
 ## 추가 도구
 - undelete-thread.js: 삭제된 토론 복구
 - namuwiki-importer.js: 나무위키 데이타베이스 덤프 가져오기
-
+- install.sh: css, js, skins 자동 다운기 ~~근데 이미 있는데 할 필요가 있을까~~
 ## config.json
 - config.json 수정으로 숨겨진 설정을 제어할 수 있다.
   - `disable_email`: (기본값 false) 전자우편 인증을 끈다.
