@@ -32,7 +32,7 @@ const randint = (s, e) => floorof(Math.random() * (e + 1 - s) + s);
 var major = 4, minor = 12, revision = 0;
 var _ready = 0;
 // PoipoEngine 버전
-var ion = 4, ion2 = 1, ion3 = 0; // 상수(const)로 대체 가능한지 실험해야함...
+var ion = 4, ion2 = 2, ion3 = 0; // 상수(const)로 대체 가능한지 실험해야함...
 // 서버, 캐시
 const wiki = express();  // 서버
 const conn = new sqlite3.Database('./wikidata.db', () => 0);  // 데이타베이스
@@ -554,7 +554,7 @@ try {
 		'css/wiki.css', 'css/diffview.css', 'css/katex.min.css',
 	];
 	const skidx = {
-		buma: 'https://github.com/LiteHell/theseed-skin-buma/archive/d77eef50a77007da391c5082b4b94818db372417.zip',
+		buma: 'https://github.com//LiteHell/theseed-skin-buma/archive/d77eef50a77007da391c5082b4b94818db372417.zip',
 		liberty: 'https://github.com/namu-theseed/theseed-skin-liberty/archive/153cf78f70206643ec42e856aff8280dc21eb2c0.zip',
 		vector: 'https://github.com/LiteHell/theseed-skin-vector/archive/51fd9afdd8000dafafd2600313e8e03df1f7fdcb.zip',
 		namuvector: 'https://github.com/LiteHell/theseed-skin-namuvector/archive/690288e719bfe7e4abced3dc715104dd80e8f1ff.zip',
@@ -1530,19 +1530,7 @@ async function markdown(req, content, discussion = 0, title = '', flags = '', ro
 		}
 		if(doc.namespace == '사용자') {
 			if(!ver('4.0.20')) {
-				if(getperm('tribune', doc.title)) {
-					data = `
-						<div style="border-width: 5px 1px 1px; border-style: solid; border-color: orange gray gray; padding: 10px; margin-bottom: 10px;" onmouseover="this.style.borderTopColor=\'red\';" onmouseout="this.style.borderTopColor=\'orange\';">
-							<span style="font-size:14pt">이 사용자는 ${config.getString('wiki.site_name', '더 시드')}의 호민관 입니다.</span>
-						</div>
-					` + data;
-				} if(getperm('arbiter', doc.title)) {
-					data = `
-						<div style="border-width: 5px 1px 1px; border-style: solid; border-color: orange gray gray; padding: 10px; margin-bottom: 10px;" onmouseover="this.style.borderTopColor=\'red\';" onmouseout="this.style.borderTopColor=\'orange\';">
-							<span style="font-size:14pt">이 사용자는 ${config.getString('wiki.site_name', '더 시드')}의 중재자 입니다.</span>
-						</div>
-					` + data;
-				} if(getperm('admin', doc.title)) {
+			                if(getperm('admin', doc.title)) {
 					data = `
 						<div style="border-width: 5px 1px 1px; border-style: solid; border-color: orange gray gray; padding: 10px; margin-bottom: 10px;" onmouseover="this.style.borderTopColor=\'red\';" onmouseout="this.style.borderTopColor=\'orange\';">
 							<span style="font-size:14pt">이 사용자는 ${config.getString('wiki.site_name', '더 시드')}의 관리자 입니다.</span>
@@ -1808,7 +1796,7 @@ async function render(req, title = '', content = '', varlist = {}, subtitle = ''
 				<meta name=msapplication-starturl content="/w/` + encodeURIComponent(config.getString('wiki.front_page', 'FrontPage')) + `" />
 				<link rel=search type="application/opensearchdescription+xml" title="` + config.getString('wiki.site_name', '더 시드') + `" href="/opensearch.xml" />
 				<meta name=viewport content="width=device-width, initial-scale=1, maximum-scale=1" />
-			${hostconfig.  ? `
+			${hostconfig.use_external_css  ? `
 				<link rel=stylesheet href="https://theseed.io/css/diffview.css" />
 				<link rel=stylesheet href="https://theseed.io/css/katex.min.css" />
 				<link rel=stylesheet href="https://theseed.io/css/wiki.css" />
@@ -2594,7 +2582,7 @@ function expireopt(req) {
 wiki.get(/^\/License$/, async(req, res) => {
 	var licepage = `
 		<h2>PoipoEngine</h2>
-		<p>v4.1.0</p>
+		<p>v4.2.0</p>
 		<p>Copyright <a href="https://github.com/poiega">poiega</a> all rights reserved.</p>
 		<p>2020.06.20 - 2022.09.17 Commits Copyright <a href="https://github.com/gdl-blue">gdl-blue</a>. Do not distribute!</p>
 			
@@ -2619,27 +2607,37 @@ wiki.get(/^\/License$/, async(req, res) => {
 					Swig is licensed under the <a rel="license" href="https://github.com/paularmstrong/swig/blob/master/LICENSE">MIT license</a>.
 				</li>
 	`;
-        if(hostconfig.replicate_imitated_seed_license) {
-        licepage = '';
+       
+        if(hostconfig.replicate_seed) {
+		/*
+		Copyright JeonDohyeon
+		https://wiki.jdh5968.pe.kr/License 출처
+		*/
+		licepage = '';
 		if(ver('4.11.1')) {
-			licepage += `<h2>imitated-seed</h2>>`;
+			licepage += `<h2>the seed</h2><p>v${major}.${minor}.${revision}</p>`;
 		} else {
-			licepage += `<h2>imitated-seed</h2>>`;
+			licepage += `<h2>the seed (v${major}.${minor}.${revision})</h2>`;
 		}
-		licepage += ` 
-		      `<h2>imitated-seed</h2>
-			<p>ver.${lastupddate}${ispatched ? `(Patched by ${patcher} at ${patchdate})` : ''}<br>
-				(the seed v${major}.${minor}.${revision})</p>` : `<h2>imitated-seed ver.${lastupddate}</h2>
-			<p>(Patched by ${patcher} at ${patchdate})<br>
-				(the seed v${major}.${minor}.${revision})`}
+		licepage += `
+		 <div class="wiki-article content">
+            
+
+		<div class="wiki-content">
+			
+			<h2>imitated-seed</h2>
+			<p>ver.20220917 (Last patched at 2022.11.08)<br>
+				(the seed ${major}.${minor}.${revision})</p>
 			<p>Copyright <a href="https://github.com/gdl-blue">gdl-blue</a>. Do not distribute!</p>
 			<h2>Contributors</h2>
-			<ul class=wiki-list>
+			<ul class="wiki-list">
 				<li><a href="https://github.com/gdl-blue">github@gdl-blue</a> (source code)</li>
-				<li><a href="https://github.com/JeonDohyeon">github@JeonDohyeon</a> (https://github.com/JeonDohyeon/imitated-seed/blob/flight/server.js 2699 - 2791)</li>
-			</ul>`;
-	}
+		</ul>
+	</div>
 
+        </div> `
+	
+	}
 	if(hostconfig.replicate_theseed_license) {
 		licepage = '';
 		if(ver('4.11.1')) {
@@ -3262,6 +3260,7 @@ wiki.all(/^\/edit\/(.*)/, async function editDocument(req, res, next) {
 					<textarea id="g-recaptcha-response" name="g-recaptcha-response" class="g-recaptcha-response" style="width: 250px; height: 40px; border: 1px solid #c1c1c1; margin: 10px 25px; padding: 0px; resize: none;  display: none; "></textarea>
 				</div>
 			</div>
+			
 			<script>
 				recaptchaInit('recaptcha', {
 					'sitekey': '',
@@ -4202,11 +4201,12 @@ wiki.all(/^\/new_edit_request\/(.*)$/, async(req, res, next) => {
 				<label class=control-label for="summaryInput">요약</label>
 				<input type="text" class=form-control id="logInput" name="log" value="">
 			</div>
-
 			<label><input ${req.method == 'POST' ? 'checked ' : ''}type="checkbox" name="agree" id="agreeCheckbox" value="Y">&nbsp;${config.getString('wiki.editagree_text', `문서 편집을 <strong>저장</strong>하면 당신은 기여한 내용을 <strong>CC-BY-NC-SA 2.0 KR</strong>으로 배포하고 기여한 문서에 대한 하이퍼링크나 URL을 이용하여 저작자 표시를 하는 것으로 충분하다는 데 동의하는 것입니다. 이 <strong>동의는 철회할 수 없습니다.</strong>`)}</strong></label>
 			
 			${islogin(req) ? '' : `<p style="font-weight: bold;">비로그인 상태로 편집합니다. 편집 역사에 IP(${ip_check(req)})가 영구히 기록됩니다.</p>`}
-			
+			${hostconfig.namuwiki_exclusive ? `
+			<span data-v-editpost"">편집 요청은 편집 권한이 있는 사용자가 승인할 수 있습니다. 편집 권한이 있는 사용자가 확인 할 수 있도록 편집 내용을 뒷받침할 수 있는 출처 또는 근거를 타 사용자가 확인 가능하도록 편집 요약에 입력해 주세요.<br><span style="color: red; text-decoration: underline; font-weight: bold;">정당한 사유가 기재되지 않은 편집 요청에 대해서 관리자 직권으로 닫기 처리</span>할 수 있으므로, 편집 요청 시에는 편집 요약을 통해 근거를 포함하시는 것을 강력하게 권장합니다.</span>
+	`;
 			${generateCaptcha(req, req.session.captcha)}
 			
 			<div class="btns">
