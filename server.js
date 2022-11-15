@@ -1,4 +1,4 @@
-/* PoipoEngine - 병아리 엔진 개조 프로젝트 */
+/* 병아리 엔진 - the seed 모방 프로젝트 */
 
 const http = require('http');
 const https = require('https');
@@ -31,9 +31,9 @@ const randint = (s, e) => floorof(Math.random() * (e + 1 - s) + s);
 // 더 시드 모방 버전 (나중에 config.json에서 불러옴)
 var major = 4, minor = 12, revision = 0;
 var _ready = 0;
-// PoipoEngine 버전
-var ion = 4, ion2 = 2, ion3 = 0; // 상수(const)로 대체 가능한지 실험해야함...
-// 서버, 캐시
+// PoipoEngine 버전 
+var ion1 = 4, ion2 = 3, ion2 = 0
+
 const wiki = express();  // 서버
 const conn = new sqlite3.Database('./wikidata.db', () => 0);  // 데이타베이스
 const upload = multer();  // 파일 올리기 모듈
@@ -75,7 +75,7 @@ wiki.use(session({
 wiki.use(cookieParser());
 
 // 업데이트 수준
-const updatecode = '1';
+const updatecode = '16';
 
 // 사용자 권한
 var perms = [
@@ -533,7 +533,7 @@ try {
 	if(!(minor > 0 || (minor == 0 && revision >= 20))) perms = perms.concat(['developer', 'tribune', 'arbiter']);
 	if(hostconfig.debug) perms.push('debug');
 } catch(e) { (async function() {
-	print('PoipoEngine - the seed 모방 엔진에 오신걸 환영합니다!\n');
+	print('PoipoEngine - the seed 모방 엔진에 오신것을 환영합니다.\n');
 	
 	if(typeof hostconfig != 'object')
 	
@@ -546,54 +546,6 @@ try {
 		search_port: '25005',
 		owners: [input('소유자 닉네임: ')],
 	};
-	/*
-	const frfl = [
-		'js/theseed.js', 'js/jquery-2.1.4.min.js', 'js/jquery-1.11.3.min.js', 
-		'js/intersection-observer.js', 'js/dateformatter.js',
-		
-		'css/wiki.css', 'css/diffview.css', 'css/katex.min.css',
-	];
-	const skidx = {
-		buma: 'https://github.com//LiteHell/theseed-skin-buma/archive/d77eef50a77007da391c5082b4b94818db372417.zip',
-		liberty: 'https://github.com/namu-theseed/theseed-skin-liberty/archive/153cf78f70206643ec42e856aff8280dc21eb2c0.zip',
-		vector: 'https://github.com/LiteHell/theseed-skin-vector/archive/51fd9afdd8000dafafd2600313e8e03df1f7fdcb.zip',
-		namuvector: 'https://github.com/LiteHell/theseed-skin-namuvector/archive/690288e719bfe7e4abced3dc715104dd80e8f1ff.zip',
-		marble: 'https://github.com/foxtrot-99/theseed-skin-marble/archive/refs/heads/master.zip',
-	};
-	function download(path) {
-		return new Promise((resolve, reject) => {
-			https.get({
-				host: 'theseed.io',
-				path: '/' + path,
-			}, res => {
-				const d = [];
-				res.on('data', chunk => d.push(chunk));
-				res.on('end', () => {
-					var ret = Buffer.from('');
-					ret = Buffer.concat([ret, Buffer.concat(d)]);
-					fs.writeFileS
-				});
-			});
-		});
-	}
-	if((hostconfig.uninitialized !== undefined && hostconfig.download_files) || hostconfig.uninitialized === undefined) {
-		var chk = null;
-		for(var f of frfl) {
-			if(!fs.existsSync(f)) {
-				chk = f;
-				break;
-			}
-		}
-		if(chk) {
-			if(hostconfig.uninitialized !== undefined || (hostconfig.uninitialized === undefined && input(f + ' 파일이 없습니다. 이것은 위키 실행을 위해 필요합니다. theseed.io에서 자동으로 다운로드하시겠습니까? [Y/N]: ').toLowerCase() == 'Y')) {
-				var dodn = 1;
-			}
-		}
-		if(dodn) {
-			
-		}
-	}
-	*/
 	hostconfig.uninitialized = false;
 	
 	// 만들 테이블
@@ -641,7 +593,7 @@ try {
 	}
 	
 	fs.writeFileSync('config.json', JSON.stringify(hostconfig), 'utf8');
-	print('\n준비 완료되었습니다. 엔진을 다시 시작하십시오.');
+	print('\n준비 완료되었습니다. 엔진을 다시 시작하세요.');
 	process.exit(0);
 })(); } if(_ready) {
 
@@ -1530,13 +1482,14 @@ async function markdown(req, content, discussion = 0, title = '', flags = '', ro
 		}
 		if(doc.namespace == '사용자') {
 			if(!ver('4.0.20')) {
-			                if(getperm('admin', doc.title)) {
+				if(getperm('admin', doc.title)) {
 					data = `
 						<div style="border-width: 5px 1px 1px; border-style: solid; border-color: orange gray gray; padding: 10px; margin-bottom: 10px;" onmouseover="this.style.borderTopColor=\'red\';" onmouseout="this.style.borderTopColor=\'orange\';">
 							<span style="font-size:14pt">이 사용자는 ${config.getString('wiki.site_name', '더 시드')}의 관리자 입니다.</span>
 						</div>
 					` + data;
-				} if(getperm('developer', doc.title)) {
+				} 
+				if(getperm('developer', doc.title)) {
 					data = `
 						<div style="border-width: 5px 1px 1px; border-style: solid; border-color: purple gray gray; padding: 10px; margin-bottom: 10px;" onmouseover="this.style.borderTopColor=\'red\';" onmouseout="this.style.borderTopColor=\'purple\';">
 							<span style="font-size:14pt">이 사용자는 ${config.getString('wiki.site_name', '더 시드')}의 개발자 입니다.</span>
@@ -1796,7 +1749,7 @@ async function render(req, title = '', content = '', varlist = {}, subtitle = ''
 				<meta name=msapplication-starturl content="/w/` + encodeURIComponent(config.getString('wiki.front_page', 'FrontPage')) + `" />
 				<link rel=search type="application/opensearchdescription+xml" title="` + config.getString('wiki.site_name', '더 시드') + `" href="/opensearch.xml" />
 				<meta name=viewport content="width=device-width, initial-scale=1, maximum-scale=1" />
-			${hostconfig.use_external_css  ? `
+			${hostconfig.use_external_css ? `
 				<link rel=stylesheet href="https://theseed.io/css/diffview.css" />
 				<link rel=stylesheet href="https://theseed.io/css/katex.min.css" />
 				<link rel=stylesheet href="https://theseed.io/css/wiki.css" />
@@ -1848,6 +1801,7 @@ async function render(req, title = '', content = '', varlist = {}, subtitle = ''
 		});
 	});
 }
+
 // ACL 종류
 const acltype = {
 	read: '읽기',
@@ -2581,62 +2535,54 @@ function expireopt(req) {
 
 wiki.get(/^\/License$/, async(req, res) => {
 	var licepage = `
-		<h2>PoipoEngine</h2>
-		<p>v4.2.0</p>
-		<p>Copyright <a href="https://github.com/poiega">poiega</a> all rights reserved.</p>
-		<p>2020.06.20 - 2022.09.17 Commits Copyright <a href="https://github.com/gdl-blue">gdl-blue</a>. Do not distribute!</p>
-			
-			<h3>Contributors</h3>
-			<ul class=wiki-list>
-			<li>poiega@poie.ga (backend & frontend)</li>
-		        <li><a href="https://github.com/gdl-blue">gdl-blue</a></li>
-			</ul>
-			<h3>Github</h3>
-			<ul cless=wiki-list>
-			<a href="https://github.com/poiega/PoipoEngine">Github</a>
-			<h3>Open source license</h3>
+	<h2>PoipoEngine</h2>
+	(the seed v${major}.${minor}.${revision})
+    v${ion1}.${ion2}.${ion3}
+	<h3>Contributors</h3>
+	<ul class=wiki-list>
+	<li>poiega@poie.ga (frontend & backend)</li>
+	<li><a href="//github.com/gdl-blue">gdl-blue(Engine original author)</a><li>
+	<li><a href="//github.com/JeonDohyeon">JeonDohyeon(Who helped develop)</a></li>
+	<li></li>
+	<h3>Open source</h3>
+	<ul class=wiki-list>
+	PoipoEngine은 오픈소스이며, <a href="https://github.com/gdl-blue/imitated-seed-2">imitated-seed</a> 엔진 기반으로 개발됩니다.
+	<a href="https://github.com/poiega/PoipoEngine">깃허브</a>
+	PoipoEngine에 라이선스는 BSD 3-Clause "New" or "Revised" License입니다. 라이선스를 지켜주세요.
+	</ul>
+	<h3>Open source license</h3>
 			<ul class=wiki-list>
 				<li>
-					<a href="https://github.com/Khan/KaTeX">KaTex</a><br>
-					Author : <a href="https://github.com/Khan">Khan Academy</a><br />
-					KaTeX is licensed under the <a rel="license" href="https://github.com/Khan/KaTeX/blob/master/LICENSE.txt">MIT license</a>.
-				</li>
-				<li>
-					<a href="https://paularmstrong.github.io/swig/">Swig</a><br />
-					Author : <a href="https://github.com/paularmstrong">Paul Armstrong</a><br />
-					Swig is licensed under the <a rel="license" href="https://github.com/paularmstrong/swig/blob/master/LICENSE">MIT license</a>.
+					<a href="https://github.com/gdl-blue/imitated-seed-2">imitated-seed</a><br>
+					Author : <a href="https://github.com/gdl-blue">gdl-blue</a><br />
+					imitated-seed is licensed under the no License.
 				</li>
 	`;
-       
-        if(hostconfig.replicate_seed) {
-		/*
-		Copyright JeonDohyeon
-		https://wiki.jdh5968.pe.kr/License 출처
-		*/
+	/*
+	2552, 2554, 2555, 2556, 2557, 2558, 2559, 2560, 2561, 2562줄
+    출처: https://wiki.jdh5968.pe.kr/License
+	by JeonDohyeon
+	*/
+    if(hostconfig.imitated_seed_license) {
 		licepage = '';
 		if(ver('4.11.1')) {
-			licepage += `<h2>the seed</h2><p>v${major}.${minor}.${revision}</p>`;
+			licepage += `<h2>imitated-seed</h2><p>v${major}.${minor}.${revision}</p>`;
 		} else {
 			licepage += `<h2>the seed (v${major}.${minor}.${revision})</h2>`;
 		}
 		licepage += `
-		 <div class="wiki-article content">
-            
-
 		<div class="wiki-content">
 			
 			<h2>imitated-seed</h2>
-			<p>ver.20220917 (Last patched at 2022.11.08)<br>
-				(the seed ${major}.${minor}.${revision})</p>
+			<p>ver.20220917<br>
+				(the seed v${major}.${minor}.${revision})</p>
 			<p>Copyright <a href="https://github.com/gdl-blue">gdl-blue</a>. Do not distribute!</p>
 			<h2>Contributors</h2>
 			<ul class="wiki-list">
 				<li><a href="https://github.com/gdl-blue">github@gdl-blue</a> (source code)</li>
 		</ul>
 	</div>
-
-        </div> `
-	
+		`
 	}
 	if(hostconfig.replicate_theseed_license) {
 		licepage = '';
@@ -3260,7 +3206,6 @@ wiki.all(/^\/edit\/(.*)/, async function editDocument(req, res, next) {
 					<textarea id="g-recaptcha-response" name="g-recaptcha-response" class="g-recaptcha-response" style="width: 250px; height: 40px; border: 1px solid #c1c1c1; margin: 10px 25px; padding: 0px; resize: none;  display: none; "></textarea>
 				</div>
 			</div>
-			
 			<script>
 				recaptchaInit('recaptcha', {
 					'sitekey': '',
@@ -4201,12 +4146,12 @@ wiki.all(/^\/new_edit_request\/(.*)$/, async(req, res, next) => {
 				<label class=control-label for="summaryInput">요약</label>
 				<input type="text" class=form-control id="logInput" name="log" value="">
 			</div>
+
 			<label><input ${req.method == 'POST' ? 'checked ' : ''}type="checkbox" name="agree" id="agreeCheckbox" value="Y">&nbsp;${config.getString('wiki.editagree_text', `문서 편집을 <strong>저장</strong>하면 당신은 기여한 내용을 <strong>CC-BY-NC-SA 2.0 KR</strong>으로 배포하고 기여한 문서에 대한 하이퍼링크나 URL을 이용하여 저작자 표시를 하는 것으로 충분하다는 데 동의하는 것입니다. 이 <strong>동의는 철회할 수 없습니다.</strong>`)}</strong></label>
+			<span data-v-editrequset_post="">편집 요청은 편집 권한이 있는 사용자가 승인할 수 있습니다. 편집 권한이 있는 사용자가 확인 할 수 있도록 편집 내용을 뒷받침할 수 있는 출처 또는 근거를 타 사용자가 확인 가능하도록 편집 요약에 입력해 주세요. <span style="color: red; text-decoration: underline; font-weight: bold;">정당한 사유가 기재되지 않은 편집 요청에 대해서 관리자 직권으로 닫기 처리</span>할 수 있습니다. 편집 요청 시에는 편집 요약을 통해 근거를 포함하시는 것을 강력하게 권장합니다.</span>
 			
 			${islogin(req) ? '' : `<p style="font-weight: bold;">비로그인 상태로 편집합니다. 편집 역사에 IP(${ip_check(req)})가 영구히 기록됩니다.</p>`}
-			${hostconfig.namuwiki_exclusive ? `
-			<span data-v-editpost"">편집 요청은 편집 권한이 있는 사용자가 승인할 수 있습니다. 편집 권한이 있는 사용자가 확인 할 수 있도록 편집 내용을 뒷받침할 수 있는 출처 또는 근거를 타 사용자가 확인 가능하도록 편집 요약에 입력해 주세요.<br><span style="color: red; text-decoration: underline; font-weight: bold;">정당한 사유가 기재되지 않은 편집 요청에 대해서 관리자 직권으로 닫기 처리</span>할 수 있으므로, 편집 요청 시에는 편집 요약을 통해 근거를 포함하시는 것을 강력하게 권장합니다.</span>
-	`;
+			
 			${generateCaptcha(req, req.session.captcha)}
 			
 			<div class="btns">
