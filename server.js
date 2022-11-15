@@ -1,4 +1,4 @@
-/* 병아리 엔진 - the seed 모방 프로젝트 */
+/* PoipoEngine - the seed 모방 프로젝트 */
 
 const http = require('http');
 const https = require('https');
@@ -32,7 +32,7 @@ const randint = (s, e) => floorof(Math.random() * (e + 1 - s) + s);
 var major = 4, minor = 12, revision = 0;
 var _ready = 0;
 // PoipoEngine 버전 
-var ion1 = 4, ion2 = 3, ion2 = 0
+var ion1 = 4, ion2 = 4, ion2 = 0
 
 const wiki = express();  // 서버
 const conn = new sqlite3.Database('./wikidata.db', () => 0);  // 데이타베이스
@@ -75,7 +75,7 @@ wiki.use(session({
 wiki.use(cookieParser());
 
 // 업데이트 수준
-const updatecode = '16';
+const updatecode = '4';
 
 // 사용자 권한
 var perms = [
@@ -533,7 +533,7 @@ try {
 	if(!(minor > 0 || (minor == 0 && revision >= 20))) perms = perms.concat(['developer', 'tribune', 'arbiter']);
 	if(hostconfig.debug) perms.push('debug');
 } catch(e) { (async function() {
-	print('PoipoEngine - the seed 모방 엔진에 오신것을 환영합니다.\n');
+	print('PoipoEngine - the seed 모방 엔진에 오신걸 환영합니다.\n');
 	
 	if(typeof hostconfig != 'object')
 	
